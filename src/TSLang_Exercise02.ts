@@ -11,6 +11,8 @@ class TSLang_Exercise02 extends TSLang_ExerciseBase {
         // console.log("--------------------------exercise02 start------------------------");
         //变量声明
         
+
+        
     }
 
 }
