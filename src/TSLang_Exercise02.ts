@@ -8,7 +8,7 @@ class TSLang_Exercise02 extends TSLang_ExerciseBase {
 
     public Exercise() {
         super.Exercise();
-        // console.log("exercise02 start");
+        // console.log("--------------------------exercise02 start------------------------");
         //变量声明
         
     }
