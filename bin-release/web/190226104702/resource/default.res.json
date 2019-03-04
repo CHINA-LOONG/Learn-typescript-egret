@@ -1,0 +1,32 @@
+{
+	"groups":[
+	{
+		"keys":"bg_jpg,egret_icon_png,description_json",
+		"name":"preload"
+	},
+	{
+		"keys":"click1_ogg",
+		"name":"sounds"
+	}],
+	"resources":[
+	{
+		"name":"bg_jpg",
+		"type":"image",
+		"url":"assets/bg.jpg"
+	},
+	{
+		"name":"egret_icon_png",
+		"type":"image",
+		"url":"assets/egret_icon.png"
+	},
+	{
+		"name":"description_json",
+		"type":"json",
+		"url":"config/description.json"
+	},
+	{
+		"name":"click1_ogg",
+		"type":"sound",
+		"url":"sound/click1.ogg"
+	}]
+}
