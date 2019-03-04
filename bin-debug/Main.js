@@ -331,8 +331,8 @@ var Main = (function (_super) {
         // })
         // console.log(dragonBones.DragonBones.VERSION);
         var exercise;
-        exercise = new TSLang_Exercise01();
-        // exercise = new TSLang_Exercise02();
+        // exercise = new TSLang_Exercise01();
+        exercise = new TSLang_Exercise02();
         exercise.Exercise();
     };
     Main.prototype.runGame = function () {

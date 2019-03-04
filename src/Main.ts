@@ -353,8 +353,8 @@ class Main extends egret.DisplayObjectContainer {
         // console.log(dragonBones.DragonBones.VERSION);
 
         let exercise;
-        exercise = new TSLang_Exercise01();
-        // exercise = new TSLang_Exercise02();
+        // exercise = new TSLang_Exercise01();
+        exercise = new TSLang_Exercise02();
         exercise.Exercise();
     }
 
