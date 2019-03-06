@@ -74,243 +74,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
-        var _this = _super.call(this) || this;
-        _this._pauseTime = 0;
-        _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.onAddToStage, _this);
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * 测试声音播放
-     */
-    Main.prototype.playSoundTest = function () {
-        var sound = new egret.Sound();
-        sound.addEventListener(egret.Event.COMPLETE, function loadOver(event) {
-            sound.play();
-        }, this);
-        sound.addEventListener(egret.IOErrorEvent.IO_ERROR, function loadError(event) {
-            console.log("loaded error!");
-        }, this);
-        sound.load("resource/sound/click1.ogg");
-    };
-    Main.prototype.playSoundTest2 = function () {
-        //需要先加载资源
-        var sound = RES.getRes("click1_ogg");
-        sound.play();
-    };
-    /**
-     * 测试事件系统
-     */
-    Main.prototype.listenerEventTest = function () {
-        var boy = new Boy();
-        var girl = new Girl();
-        boy.addEventListener(BoyDateEvent.DATE, girl.getDate, girl);
-        boy.order();
-        boy.removeEventListener(BoyDateEvent.DATE, girl.getDate, girl);
-    };
-    /**
-     * 测试绘制矢量图加事件
-     */
-    Main.prototype.touchEventTest = function () {
-        var _myGrid = new MyGrid();
-        this.addChild(_myGrid);
-        var offsetX;
-        var offsetY;
-        _myGrid.touchEnabled = true;
-        _myGrid.addEventListener(egret.TouchEvent.TOUCH_BEGIN, startMove, this);
-        _myGrid.addEventListener(egret.TouchEvent.TOUCH_END, stopMove, this);
-        function startMove(e) {
-            offsetX = e.stageX - _myGrid.x;
-            offsetY = e.stageY - _myGrid.y;
-            this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, onMove, this);
-            console.log("start:" + this.name);
-        }
-        function onMove(e) {
-            _myGrid.x = e.stageX - offsetX;
-            _myGrid.y = e.stageY - offsetY;
-        }
-        function stopMove(e) {
-            this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, onMove, this);
-        }
-    };
-    /**
-     * 渲染过滤器效果测试
-     */
-    Main.prototype.filterTest = function () {
-        var container = new egret.DisplayObjectContainer();
-        container.x = 200;
-        container.y = 200;
-        this.addChild(container);
-        var _myGrid = new MyGrid();
-        container.addChild(_myGrid);
-        _myGrid.touchEnabled = true;
-        _myGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, onClick, this);
-        function onClick() {
-            _myGrid.x = _myGrid.x + 20;
-        }
-        var container = new egret.DisplayObjectContainer();
-        container.x = 200;
-        container.y = 500;
-        this.addChild(container);
-        var bmp = new egret.Bitmap();
-        container.addChild(bmp);
-        var renderTexture1 = new egret.RenderTexture();
-        var renderTexture2 = new egret.RenderTexture();
-        renderTexture1.drawToTexture(_myGrid, new egret.Rectangle(0, 0, 150, 100));
-        bmp.texture = renderTexture1;
-        bmp.blendMode = egret.BlendMode.NORMAL;
-        var color = 0x33CCFF; /// 光晕的颜色，十六进制，不包含透明度
-        var alpha = 0.8; /// 光晕的颜色透明度，是对 color 参数的透明度设定。有效值为 0.0 到 1.0。例如，0.8 设置透明度值为 80%。
-        var blurX = 35; /// 水平模糊量。有效值为 0 到 255.0（浮点）
-        var blurY = 35; /// 垂直模糊量。有效值为 0 到 255.0（浮点）
-        var strength = 2; /// 压印的强度，值越大，压印的颜色越深，而且发光与背景之间的对比度也越强。有效值为 0 到 255。暂未实现
-        var quality = 3 /* HIGH */; /// 应用滤镜的次数，建议用 BitmapFilterQuality 类的常量来体现
-        var inner = false; /// 指定发光是否为内侧发光，暂未实现
-        var knockout = false; /// 指定对象是否具有挖空效果，暂未实现
-        var glowFilter = new egret.GlowFilter(color, alpha, blurX, blurY, strength, quality, inner, knockout);
-        var colorMatrix = [
-            0.3, 0.6, 0, 0, 0,
-            0.3, 0.6, 0, 0, 0,
-            0.3, 0.6, 0, 0, 0,
-            0, 0, 0, 1, 0
-        ];
-        var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
-        var blurFliter = new egret.BlurFilter(10, 10);
-        bmp.filters = [glowFilter, colorFlilter, blurFliter];
-    };
-    /**
-     * 文本以及效果点击测试
-     */
-    Main.prototype.textFieldTest = function () {
-        var text = new egret.TextField();
-        text.textFlow = new Array({ text: "This is a hyperlink", style: { "href": "event:text event triggered" } }, { text: "\n This is a hyperlink", style: { "href": "http://www.egret.com/" } }, { text: "\n This is just a text", style: {} });
-        text.addEventListener(egret.TextEvent.LINK, function (evt) {
-            console.log(evt.text);
-        }, this);
-        text.touchEnabled = true;
-        this.addChild(text);
-    };
-    /**
-     * 网页调试日志测试
-     */
-    Main.prototype.egretLogTest = function () {
-        egret.log(".........---");
-    };
-    Main.prototype.loadVideo = function () {
-        this._video = new egret.Video();
-        this._video.x = 0; //设置视频坐标x
-        this._video.y = 0; //设置视频坐标y
-        this._video.width = 640; //设置视频宽
-        this._video.height = 320; //设置视频高
-        this._video.fullscreen = false; //设置是否全屏（暂不支持移动设备）
-        this._video.poster = "resource/assets/egret_icon.png"; //设置loding图
-        // this._video.load("http://media.w3.org/2010/05/sintel/trailer.mp4");
-        this._video.load("http://www.w3school.com.cn/example/html5/mov_bbb.ogg");
-        //http://www.w3school.com.cn/example/html5/mov_bbb.ogg
-        this.addChild(this._video); //将视频添加到舞台
-        this._video.addEventListener(egret.Event.COMPLETE, function (e) {
-            console.log("complete");
-        }, this);
-        // //监听视频加载完成
-        // this._video.once(egret.Event.COMPLETE,this.onLoad,this);
-        // //监听视频加载失败
-        // this._video.once(egret.IOErrorEvent.IO_ERROR,this.onLoadErr,this);
-    };
-    //播放
-    Main.prototype.play = function () {
-        this.stop();
-        this._video.play(this._pauseTime, false);
-        this._video.addEventListener(egret.Event.ENDED, this.onComplete, this);
-    };
-    //停止
-    Main.prototype.stop = function () {
-        this._video.pause();
-    };
-    //播放完成
-    Main.prototype.onComplete = function (e) {
-        console.log("播放结束");
-        this._video.removeEventListener(egret.Event.ENDED, this.onComplete, this);
-        this.setAllAbled(false);
-    };
-    Main.prototype.changeScreen = function () {
-        if (!this._video.paused) {
-            this._video.fullscreen = !this._video.fullscreen;
-        }
-    };
-    Main.prototype.initCtr = function () {
-        var _video = this._video;
-        var rap = this._video.width / 4 + 5;
-        var rapH = 100;
-        //play
-        var playTxt = this._playTxt = new egret.TextField();
-        playTxt.text = "播放";
-        playTxt.size = 40;
-        playTxt.x = this._video.x;
-        playTxt.y = 400 + rapH;
-        playTxt.touchEnabled = true;
-        playTxt.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            this.play(this._pauseTime, false);
-            this.setAllAbled(true);
-        }, this);
-        this.addChild(playTxt);
-        //stop
-        var stopTxt = this._stopTxt = new egret.TextField();
-        stopTxt.text = "停止";
-        stopTxt.size = 40;
-        stopTxt.x = playTxt.x + rap * 1;
-        stopTxt.y = 400 + rapH;
-        stopTxt.touchEnabled = true;
-        stopTxt.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            this._pauseTime = 0;
-            _video.pause();
-            this.setAllAbled(false);
-        }, this);
-        this.addChild(stopTxt);
-        //pause 
-        var pauseTxt = this._pauseTxt = new egret.TextField();
-        pauseTxt.text = "暂停";
-        pauseTxt.size = 40;
-        pauseTxt.x = playTxt.x + rap * 2;
-        pauseTxt.y = 400 + rapH;
-        pauseTxt.touchEnabled = true;
-        pauseTxt.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            this._pauseTime = _video.position;
-            _video.pause();
-            this.setAllAbled(false);
-        }, this);
-        this.addChild(pauseTxt);
-        //fullscreen 
-        var fullTxt = this._fullTxt = new egret.TextField();
-        fullTxt.text = "全屏";
-        fullTxt.size = 40;
-        fullTxt.x = playTxt.x + rap * 3;
-        fullTxt.y = 400 + rapH;
-        fullTxt.touchEnabled = true;
-        fullTxt.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            this.changeScreen();
-        }, this);
-        this.addChild(fullTxt);
-        this.setAllAbled(false);
-    };
-    Main.prototype.setAllAbled = function (isPlaying) {
-        this.setTextAbled(this._playTxt, !isPlaying);
-        this.setTextAbled(this._stopTxt, isPlaying);
-        this.setTextAbled(this._pauseTxt, isPlaying);
-        this.setTextAbled(this._fullTxt, isPlaying);
-    };
-    Main.prototype.setTextAbled = function (text, touchEnabled) {
-        text.touchEnabled = touchEnabled;
-        if (touchEnabled) {
-            text.textColor = 0xffffff;
-        }
-        else {
-            text.textColor = 0x999999;
-        }
-    };
-    Main.prototype.onAddToStage = function (event) {
+    Main.prototype.createChildren = function () {
+        _super.prototype.createChildren.call(this);
         egret.lifecycle.addLifecycleListener(function (context) {
             // custom lifecycle plugin
-            context.onUpdate = function () {
-            };
         });
         egret.lifecycle.onPause = function () {
             egret.ticker.pause();
@@ -318,93 +87,22 @@ var Main = (function (_super) {
         egret.lifecycle.onResume = function () {
             egret.ticker.resume();
         };
-        // this.playSoundTest();
-        // this.listenerEventTest();
-        // this.touchEventTest();
-        // this.filterTest();
-        // this.textFieldTest();
-        // this.egretLogTest();
-        //  this.loadVideo();//有bug播放加载失败
-        //  this.initCtr();
-        // this.runGame().catch(e => {
-        //     console.log(e);
-        // })
-        // console.log(dragonBones.DragonBones.VERSION);
-        var exercise;
-        // exercise = new TSLang_Exercise01();
-        exercise = new TSLang_Exercise02();
-        exercise.Exercise();
+        //inject the custom material parser
+        //注入自定义的素材解析器
+        var assetAdapter = new AssetAdapter();
+        egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
+        egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
+        this.runGame().catch(function (e) {
+            console.log(e);
+        });
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var exercise;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log("startTime:" + egret.getTimer());
-                        return [4 /*yield*/, this.loadResource()
-                            // this.createGameScene();
-                            // const result = await RES.getResAsync("description_json")
-                            // this.startAnimation(result);
-                            // await platform.login();
-                            // const userInfo = await platform.getUserInfo();
-                            // console.log(userInfo);
-                            // console.log("endTime:" + egret.getTimer());
-                            // this.dragonBonesTest(0.5);
-                            // this.dragonBonesTest(1);
-                        ];
-                    case 1:
-                        _a.sent();
-                        // this.createGameScene();
-                        // const result = await RES.getResAsync("description_json")
-                        // this.startAnimation(result);
-                        // await platform.login();
-                        // const userInfo = await platform.getUserInfo();
-                        // console.log(userInfo);
-                        // console.log("endTime:" + egret.getTimer());
-                        // this.dragonBonesTest(0.5);
-                        // this.dragonBonesTest(1);
-                        this.spineXiaoChuanTest();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    // private dragonBonesTest(timeScale:number) {
-    //     var dragonBonesData = RES.getRes("Robot_json");
-    //     var textureData = RES.getRes("texture_json");
-    //     var texture = RES.getRes("texture_png");
-    //     let egretFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;
-    //     egretFactory.parseDragonBonesData(dragonBonesData);
-    //     egretFactory.parseTextureAtlasData(textureData, texture);
-    //     let armatureDisplay: dragonBones.EgretArmatureDisplay = egretFactory.buildArmatureDisplay("robot");
-    //     this.addChild(armatureDisplay);
-    //     armatureDisplay.x = 200;
-    //     armatureDisplay.y = 500;
-    //     armatureDisplay.animation.timeScale = timeScale;
-    //     // armatureDisplay.scaleX = 0.5;
-    //     // armatureDisplay.scaleY = 0.5;
-    //     armatureDisplay.animation.play("Run",0);
-    // }
-    Main.prototype.spineXiaoChuanTest = function () {
-        var dragonBonesData = RES.getRes("xiaochuan_ske_json");
-        var textureData = RES.getRes("xiaochuan_tex_json");
-        var texture = RES.getRes("xiaochuan_tex_png");
-        var egretFactory = dragonBones.EgretFactory.factory;
-        // let egretFactory: dragonBones.EgretFactory = new dragonBones.EgretFactory();
-        egretFactory.parseDragonBonesData(dragonBonesData);
-        egretFactory.parseTextureAtlasData(textureData, texture);
-        var armatureDisplay = egretFactory.buildArmatureDisplay("armatureName");
-        this.addChild(armatureDisplay);
-        armatureDisplay.x = 200;
-        armatureDisplay.y = 1500;
-        // armatureDisplay.scaleX = 0.5;
-        // armatureDisplay.scaleY = 0.5;
-        armatureDisplay.animation.play("animation", 0);
-    };
-    Main.prototype.waitTime = function (delay) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                setTimeout('dragonBonesTest()', 2000);
+                // exercise = new TSLang_Exercise01();
+                exercise = new TSLang_Exercise02();
+                exercise.Exercise();
                 return [2 /*return*/];
             });
         });
@@ -415,45 +113,59 @@ var Main = (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 6, , 7]);
+                        _a.trys.push([0, 5, , 6]);
                         loadingView = new LoadingUI();
                         this.stage.addChild(loadingView);
                         return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
+                        return [4 /*yield*/, this.loadTheme()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("sounds", 1)];
+                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("robot", 2)];
+                        // await RES.loadGroup("sounds", 1, loadingView);
+                        // await RES.loadGroup("robot", 2, loadingView);
+                        // await RES.loadGroup("xiaochuan", 3, loadingView);
+                        return [4 /*yield*/, RES.loadGroup("yuanchangye2", 1, loadingView)];
                     case 4:
-                        _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("xiaochuan", 3)];
-                    case 5:
+                        // await RES.loadGroup("sounds", 1, loadingView);
+                        // await RES.loadGroup("robot", 2, loadingView);
+                        // await RES.loadGroup("xiaochuan", 3, loadingView);
                         _a.sent();
                         this.stage.removeChild(loadingView);
-                        return [3 /*break*/, 7];
-                    case 6:
+                        return [3 /*break*/, 6];
+                    case 5:
                         e_1 = _a.sent();
                         console.error(e_1);
-                        return [3 /*break*/, 7];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
     };
+    Main.prototype.loadTheme = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
+            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+            var theme = new eui.Theme("resource/default.thm.json", _this.stage);
+            theme.addEventListener(eui.UIEvent.COMPLETE, function () {
+                resolve();
+            }, _this);
+        });
+    };
     /**
-     * 创建游戏场景
-     * Create a game scene
+     * 创建场景界面
+     * Create scene interface
      */
     Main.prototype.createGameScene = function () {
         var sky = this.createBitmapByName("bg_jpg");
         this.addChild(sky);
         var stageW = this.stage.stageWidth;
         var stageH = this.stage.stageHeight;
-        sky.width = stageW + 200;
+        sky.width = stageW;
         sky.height = stageH;
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
@@ -492,6 +204,12 @@ var Main = (function (_super) {
         textfield.x = 172;
         textfield.y = 135;
         this.textfield = textfield;
+        var button = new eui.Button();
+        button.label = "Click!";
+        button.horizontalCenter = 0;
+        button.verticalCenter = 0;
+        this.addChild(button);
+        button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -530,7 +248,18 @@ var Main = (function (_super) {
         };
         change();
     };
+    /**
+     * 点击按钮
+     * Click the button
+     */
+    Main.prototype.onButtonClick = function (e) {
+        var panel = new eui.Panel();
+        panel.title = "Title";
+        panel.horizontalCenter = 0;
+        panel.verticalCenter = 0;
+        this.addChild(panel);
+    };
     return Main;
-}(egret.DisplayObjectContainer));
+}(eui.UILayer));
 __reflect(Main.prototype, "Main");
 //# sourceMappingURL=Main.js.map

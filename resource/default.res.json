@@ -19,6 +19,10 @@
 		{
 			"keys":"xiaochuan_2_tex_json,xiaochuan_2_tex_png,xiaochuan_2_ske_json",
 			"name":"xiaochuan2"
+		},
+		{
+			"keys":"yuanchangye_tex_json,yuanchangye_tex_png,yuanchangye_ske_json",
+			"name":"yuanchangye2"
 		}
 	],
 	"resources":[
@@ -86,6 +90,21 @@
 			"name":"xiaochuan_2_ske_json",
 			"type":"json",
 			"url":"xiaochuan2/xiaochuan_2_ske.json"
+		},
+		{
+			"name":"yuanchangye_tex_json",
+			"type":"json",
+			"url":"yuanchangye2/yuanchangye_tex.json"
+		},
+		{
+			"name":"yuanchangye_tex_png",
+			"type":"image",
+			"url":"yuanchangye2/yuanchangye_tex.png"
+		},
+		{
+			"name":"yuanchangye_ske_json",
+			"type":"json",
+			"url":"yuanchangye2/yuanchangye_ske.json"
 		}
 	]
 }
