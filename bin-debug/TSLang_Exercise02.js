@@ -8,6 +8,14 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 /**
  * 变量声明
  */
@@ -192,6 +200,7 @@ var TSLang_Exercise02 = (function (_super) {
         (_a = { name: "baz", age: 101, }, name = _a.name, age = _a.age);
         var newName1 = o.a, newName2 = o.c;
         console.log("\n" + newName1 + ("   " + newName2));
+        //默认值
         function keepWholeObject(wholeObject) {
             var a = wholeObject.a, _a = wholeObject.b, b = _a === void 0 ? 1001 : _a;
             console.log(a + " " + b);
@@ -199,10 +208,37 @@ var TSLang_Exercise02 = (function (_super) {
         keepWholeObject({ a: "aaa" });
         var _a;
     };
+    /**
+     * 展开--反解构
+     */
+    TSLang_Exercise02.prototype.Exercise07 = function () {
+        var first = [1, 2];
+        var bothPlus = [0].concat(first);
+        console.log(bothPlus);
+        /**它是从左至右进行处理，但结果仍为对象。 这就意味着出现在展开对象后面的属性会覆盖前面的属性。 */
+        var defaults = { food: "spicy", price: 50 };
+        var search = __assign({}, defaults, { food: "rich" });
+        console.log(search);
+        search = __assign({ food: "rich" }, defaults);
+        console.log(search);
+        /**对象展开仅包含对象 自身的可枚举属性。 大体上是说当你展开一个对象实例时，你会丢失其方法： */
+        var C = (function () {
+            function C() {
+                this.p = 12;
+            }
+            C.prototype.m = function () {
+            };
+            return C;
+        }());
+        var c = new C();
+        var clone = __assign({}, c);
+        clone.p; // ok
+        //   clone.m(); // error!
+    };
     TSLang_Exercise02.prototype.Exercise = function () {
         _super.prototype.Exercise.call(this);
         // console.log("--------------------------exercise02 start------------------------");
-        this.Exercise06();
+        this.Exercise07();
     };
     return TSLang_Exercise02;
 }(TSLang_ExerciseBase));

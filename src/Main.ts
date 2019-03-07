@@ -70,7 +70,7 @@ class Main extends eui.UILayer {
 
         let exercise;
         // exercise = new TSLang_Exercise01();
-        exercise = new TSLang_Exercise02();
+        exercise = new TSLang_Exercise08();
         exercise.Exercise();
     }
 

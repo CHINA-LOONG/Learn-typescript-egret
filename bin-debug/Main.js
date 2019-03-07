@@ -101,7 +101,7 @@ var Main = (function (_super) {
             var exercise;
             return __generator(this, function (_a) {
                 // exercise = new TSLang_Exercise01();
-                exercise = new TSLang_Exercise02();
+                exercise = new TSLang_Exercise08();
                 exercise.Exercise();
                 return [2 /*return*/];
             });
