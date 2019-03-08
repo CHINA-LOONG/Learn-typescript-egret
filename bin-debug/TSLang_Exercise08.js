@@ -29,6 +29,7 @@ var TSLang_Exercise08 = (function (_super) {
         //TypeScript类型检查器使用Window.onmousedown函数的类型来推断右边函数表达式的类型。
         window.onmousedown = function (mouseEvent) { console.log(mouseEvent.button); };
         console.log("1234321");
+        /**最佳通用类型有4个候选者：Animal，Rhino，Elephant和Snake。 当然， Animal会被做为最佳通用类型。 */
     };
     TSLang_Exercise08.prototype.Exercise = function () {
         _super.prototype.Exercise.call(this);

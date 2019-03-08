@@ -177,9 +177,7 @@ var TSLang_Exercise05 = (function (_super) {
     TSLang_Exercise05.prototype.Exercise06 = function () {
         /**JavaScript本身是个动态语言。 JavaScript里函数根据传入不同的参数而返回不同类型的数据 */
         var suits = ["hearts", "spades", "clubs", "diamonds"];
-        /**一下两个属于重载 */
-        // function pickCard(x: {suit: string; card: number; }[]): number;
-        // function pickCard(x: number): {suit: string; card: number; };
+        /**函数实体 */
         function pickCard(x) {
             // Check to see if we're working with an object/array
             // if so, they gave us the deck and we'll pick the card
@@ -197,7 +195,7 @@ var TSLang_Exercise05 = (function (_super) {
         alert("card: " + pickedCard1.card + " of " + pickedCard1.suit);
         var pickedCard2 = pickCard(15);
         alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
-        var pickedCard3 = pickCard("aaaa"); // error不使用重载不会限制输入；
+        // let pickedCard3 = pickCard("aaaa");// error不使用重载不会限制输入；
     };
     TSLang_Exercise05.prototype.Exercise = function () {
         _super.prototype.Exercise.call(this);
