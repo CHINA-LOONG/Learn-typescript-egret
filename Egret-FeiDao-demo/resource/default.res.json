@@ -1,0 +1,111 @@
+{
+	"groups": [
+		{
+			"keys": "default_head_png,logo_png,rank_back_png,rank_bg_png,rank_button_png,rank_icon1_png,rank_icon2_png,rank_icon3_png,rank_tag_png,rank_tagbg_png,start_button_png,star_a_png,star_b_png,yong_3_png,yong_6_png,yong_7_png,data_json,game_json,share2_jpg,share3_jpg",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/framework/default_head.png",
+			"type": "image",
+			"name": "default_head_png"
+		},
+		{
+			"url": "assets/framework/logo.png",
+			"type": "image",
+			"name": "logo_png"
+		},
+		{
+			"url": "assets/framework/rank_back.png",
+			"type": "image",
+			"name": "rank_back_png"
+		},
+		{
+			"url": "assets/framework/rank_bg.png",
+			"type": "image",
+			"name": "rank_bg_png"
+		},
+		{
+			"url": "assets/framework/rank_button.png",
+			"type": "image",
+			"name": "rank_button_png"
+		},
+		{
+			"url": "assets/framework/rank_icon1.png",
+			"type": "image",
+			"name": "rank_icon1_png"
+		},
+		{
+			"url": "assets/framework/rank_icon2.png",
+			"type": "image",
+			"name": "rank_icon2_png"
+		},
+		{
+			"url": "assets/framework/rank_icon3.png",
+			"type": "image",
+			"name": "rank_icon3_png"
+		},
+		{
+			"url": "assets/framework/rank_tag.png",
+			"type": "image",
+			"name": "rank_tag_png"
+		},
+		{
+			"url": "assets/framework/rank_tagbg.png",
+			"type": "image",
+			"name": "rank_tagbg_png"
+		},
+		{
+			"url": "assets/framework/start_button.png",
+			"type": "image",
+			"name": "start_button_png"
+		},
+		{
+			"url": "assets/framework/star_a.png",
+			"type": "image",
+			"name": "star_a_png"
+		},
+		{
+			"url": "assets/framework/star_b.png",
+			"type": "image",
+			"name": "star_b_png"
+		},
+		{
+			"url": "assets/framework/yong_3.png",
+			"type": "image",
+			"name": "yong_3_png"
+		},
+		{
+			"url": "assets/framework/yong_6.png",
+			"type": "image",
+			"name": "yong_6_png"
+		},
+		{
+			"url": "assets/framework/yong_7.png",
+			"type": "image",
+			"name": "yong_7_png"
+		},
+		{
+			"url": "assets/data/data.json",
+			"type": "json",
+			"name": "data_json"
+		},
+		{
+			"url": "assets/game/game.json",
+			"type": "sheet",
+			"name": "game_json",
+			"subkeys": "close,dao_1,dao_2,dao_3,dao_4,dao_5,di_1,di_2,di_3,icon_kanshipin,icon_weijiesuo,jiantou_you,jiantou_zuo,logo,share,video,yuan_1,yuan_2,yuan_3,yuan_4,yuan_5"
+		},
+		{
+			"name": "share2_jpg",
+			"type": "image",
+			"url": "assets/share/share2.jpg"
+		},
+		{
+			"name": "share3_jpg",
+			"type": "image",
+			"url": "assets/share/share3.jpg"
+		}
+	]
+}

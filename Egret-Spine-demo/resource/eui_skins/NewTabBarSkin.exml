@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="NewTabBarSkin"
+	 width="400"
+	height="300" xmlns:e="http://ns.egret.com/eui">
+	<e:TabBar dataProvider="{view}" anchorOffsetX="0" width="189" anchorOffsetY="0" height="214">
+		<e:itemRendererSkinName>
+			<e:Skin states="up,down,upAndSelected,downAndSelected">
+			<e:Label text="tab"/>
+			</e:Skin>
+		</e:itemRendererSkinName>
+	</e:TabBar>
+	<e:ViewStack id="view" x="200" y="125" selectedIndex="0" visible="true">
+		<e:Group name="info"></e:Group>
+		<e:Group name="sound"></e:Group>
+	</e:ViewStack>
+</e:Skin>

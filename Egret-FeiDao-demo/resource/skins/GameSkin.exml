@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GameSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="gp_rank" top="20" left="20">
+		<e:Rect width="168" height="156" ellipseWidth="20" alpha="0.5" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" ellipseHeight="20"/>
+		<e:Label id="lbl_rank1_name" text="玩家1" x="48" y="18" size="16" fontFamily="SimHei" textColor="0xd8d8d8" width="80"/>
+		<e:Label id="lbl_rank1_num" text="200" x="128" y="18" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="26"/>
+		<e:Image id="lbl_rank1_src" source="game_json.yuan_1" x="18" y="18" width="16" height="16" smoothing="true"/>
+		<e:Label id="lbl_rank2_name" text="玩家1" x="48" y="44" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="80"/>
+		<e:Label id="lbl_rank2_num" text="200" x="128" y="44" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="26"/>
+		<e:Image id="lbl_rank2_src" source="game_json.yuan_1" x="18" y="44" width="16" height="16" smoothing="true"/>
+		<e:Label id="lbl_rank3_name" text="玩家1" x="48" y="70" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="80"/>
+		<e:Label id="lbl_rank3_num" text="200" x="128" y="70" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="26"/>
+		<e:Image id="lbl_rank3_src" source="game_json.yuan_1" x="18" y="70" width="16" height="16" smoothing="true"/>
+		<e:Label id="lbl_rank4_name" text="玩家1" x="48" y="96" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="80"/>
+		<e:Label id="lbl_rank4_num" text="200" x="128" y="96" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="26"/>
+		<e:Image id="lbl_rank4_src" source="game_json.yuan_1" x="18" y="96" width="16" height="16" smoothing="true"/>
+		<e:Label id="lbl_rank5_name" text="玩家1" x="48" y="122" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="80"/>
+		<e:Label id="lbl_rank5_num" text="200" x="128" y="122" size="16" fontFamily="SimHei" textColor="0xD8D8D8" width="26"/>
+		<e:Image id="lbl_rank5_src" source="game_json.yuan_1" x="18" y="122" width="16" height="16" smoothing="true"/>
+	</e:Group>
+	<e:Label id="lbl_count" text="1:00" y="59" fontFamily="SimHei" verticalAlign="middle" textAlign="center" width="160" horizontalCenter="0" size="48"/>
+	<e:Group id="gp_over" x="0" verticalCenter="0" touchChildren="true" touchEnabled="false">
+		<e:Rect width="750" height="400" ellipseWidth="20" alpha="0.5" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" ellipseHeight="20" y="0" x="0"/>
+		<e:Label id="lbl_rank" text="第1名" size="60" fontFamily="SimHei" textColor="0xD8D8D8" y="80" horizontalCenter="0"/>
+		<e:Label id="lbl_showoff" text="炫耀" size="40" fontFamily="SimHei" textColor="0xD8D8D8" y="180" horizontalCenter="0" width="120" height="80" verticalAlign="middle" textAlign="center" touchEnabled="true"/>
+		<e:Label id="lbl_back" text="首页" size="40" fontFamily="SimHei" textColor="0xD8D8D8" y="280" horizontalCenter="0" width="120" height="80" verticalAlign="middle" textAlign="center" touchEnabled="true"/>
+	</e:Group>
+</e:Skin>

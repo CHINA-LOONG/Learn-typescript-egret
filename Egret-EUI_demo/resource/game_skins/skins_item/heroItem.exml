@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="heroItem" width="443" height="104" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+    <e:Image source="listItemBkgd_png" horizontalCenter="0" verticalCenter="0" />
+    <e:Label text="{data.name}" x="161" y="22"  size="20" textColor="0xff9e00"/>
+    <e:Label text="{data.value}" x="125" y="65"  size="17" textColor="0xb6ff00" fontFamily="Arial"/>
+    <e:Image width="60" height="69" x="34" y="18" anchorOffsetX="0" anchorOffsetY="0" source="{data.image}" />
+    <e:CheckBox id="ck_select" label="" x="387" y="18">
+        <e:skinName>
+            <e:Skin states="up,down,disabled">
+                <e:Image width="100%" height="100%" source="checkNo_png" source.down="checked_png" />
+                <e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" />
+            </e:Skin>
+        </e:skinName>
+    </e:CheckBox>
+</e:Skin>

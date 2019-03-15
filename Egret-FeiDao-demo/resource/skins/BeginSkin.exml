@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BeginSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="gp_bg" width="750" height="1334">
+		<e:Rect id="rect_bg" width="750" height="1334" x="-1" y="0" fillColor="0x444444"/>
+	</e:Group>
+	<e:Image id="img_left" source="game_json.jiantou_zuo" x="60" y="600" width="120" height="120" smoothing="true"/>
+	<e:Image id="img_right" source="game_json.jiantou_you" y="600" width="120" height="120" smoothing="true" right="60"/>
+	<e:Image id="img_logo" source="game_json.logo" y="0" horizontalCenter="0" visible="false"/>
+	<e:Label id="lbl_logo" text="我飞刀玩的贼6" fontFamily="KaiTi" size="80" horizontalCenter="0" touchEnabled="true" height="125" textAlign="center" verticalAlign="middle" top="85" anchorOffsetY="0"/>
+	<e:Label id="lbl_start" text="开始游戏" fontFamily="SimHei" size="50" horizontalCenter="0" bottom="300" touchEnabled="true" width="300" height="80" textAlign="center" verticalAlign="middle"/>
+	<e:Group x="630" y="875">
+		<e:Label id="lbl_add" text="增加飞刀" fontFamily="SimHei" size="28" touchEnabled="true" width="120" height="80" textAlign="center" verticalAlign="middle" y="0" x="0"/>
+		<e:Label text="▲" fontFamily="SimHei" size="28" touchEnabled="false" textAlign="center" verticalAlign="middle" y="26" x="6" rotation="90"/>
+	</e:Group>
+	<e:Label id="lbl_need" text="" y="300" fontFamily="SimHei" size="32" horizontalCenter="0"/>
+	<e:Label id="lbl_crt" text="" y="347.88" fontFamily="SimHei" size="32" horizontalCenter="0"/>
+	<e:Label id="lbl_share" text="分享" fontFamily="SimHei" size="36" touchEnabled="true" width="100" height="60" textAlign="center" verticalAlign="middle" y="955" right="0"/>
+	<e:Group x="215" y="600" visible="false">
+		<e:Image source="game_json.yuan_1" anchorOffsetX="32" anchorOffsetY="32"/>
+		<e:Image source="game_json.dao_4" anchorOffsetY="57.5" scaleX="0.5" scaleY="0.5" anchorOffsetX="129"/>
+		<e:Image source="game_json.dao_4" anchorOffsetY="57.5" anchorOffsetX="128" rotation="90"/>
+		<e:Image source="game_json.dao_4" anchorOffsetY="57.5" anchorOffsetX="128" rotation="180"/>
+		<e:Image source="game_json.dao_4" anchorOffsetY="57.5" anchorOffsetX="128" rotation="270"/>
+	</e:Group>
+	<e:Group id="gp_cast" horizontalCenter="0" verticalCenter="0" visible="false">
+		<e:Image id="img_bg" source="game_json.di_3" width="750" height="1334" alpha="0.3"/>
+		<e:Image source="yong_3_png" y="287" width="580" height="780" scale9Grid="50,47,43,34" horizontalCenter="0"/>
+		<e:Image id="img_closecast" x="617" width="80" height="80" source="game_json.close" y="253"/>
+		<e:Label id="lbl_cast_title" text="2019.2.15更新公告" y="330" size="48" fontFamily="KaiTi" textColor="0x1c00fc" horizontalCenter="0" verticalAlign="middle" textAlign="center"/>
+		<e:Label id="lbl_cast" text="1.紧急修复没有小刀可吃的bug；\n\n\n\n下次更新预告：\n1.提供皮肤选择\n2.优化核心玩法" y="426" size="32" fontFamily="KaiTi" verticalAlign="top" textAlign="left" bold="true" textColor="0x031901" anchorOffsetX="0" width="478" anchorOffsetY="0" height="436" horizontalCenter="0"/>
+		<e:Label id="lbl_tag" text="如果你有好的想法和建议\n可以点击左侧游戏圈发表\n您的鼓励是我更新的最大动力" y="933" size="32" fontFamily="KaiTi" verticalAlign="top" bold="true" textColor="0x031901" anchorOffsetX="0" width="478" anchorOffsetY="0" height="108"  horizontalCenter="0"/>
+	</e:Group>
+	<e:Label id="lbl_quan" text="游戏圈" y="980" fontFamily="SimHei" size="25" x="2" textColor="0xd8d8d8"/>
+</e:Skin>

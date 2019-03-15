@@ -1,0 +1,4 @@
+class NewHandUI {
+	public constructor() {
+	}
+}

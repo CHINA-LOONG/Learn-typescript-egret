@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="xx.TestDemoSkin" xmlns:e="http://ns.egret.com/eui">
+    <e:DataGroup>
+        <e:itemRendererSkinName>
+            <e:Skin>
+                <e:Label textColor="0xfd0000" text="{data.label}" />
+            </e:Skin>
+        </e:itemRendererSkinName>
+        <e:ArrayCollection>
+            <e:Array>
+                <e:Object label="item1" />
+                <e:Object label="item2" />
+                <e:Object label="item3" />
+            </e:Array>
+        </e:ArrayCollection>
+    </e:DataGroup>
+	<e:Group width="200" height="200" x="78" y="15">
+		<e:Button id="testDemoBtn" label="test" y="21" enabled="true" left="0" right="0"/>
+	</e:Group>
+</e:Skin>

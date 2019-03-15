@@ -1,0 +1,15 @@
+{
+    "1697c50415e": {
+        "path": "..\\resource\\game_skins\\MainScene.ts",
+        "class": "MainScene",
+        "parentPath": ""
+    },
+    "global": {
+        "globalAutoLayerMarkEnable": true
+    },
+    "1697f589306": {
+        "path": "..\\resource\\game_skins\\HeroScene.ts",
+        "class": "HeroScene",
+        "parentPath": ""
+    }
+}

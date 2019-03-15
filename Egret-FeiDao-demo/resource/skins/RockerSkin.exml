@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RockerSkin" width="300" height="300" xmlns:e="http://ns.egret.com/eui">
+    <e:Image id="circle" x="0" y="0" width="300" height="300" source="game_json.yuan_1"/>
+	<e:Image id="ball" x="140" y="104" anchorOffsetX="16" anchorOffsetY="16" width="124" height="124" source="game_json.yuan_2"/>
+
+</e:Skin>

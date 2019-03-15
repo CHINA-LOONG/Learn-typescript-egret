@@ -1,0 +1,215 @@
+{
+    "file": "game.png",
+    "frames": {
+        "close": {
+            "x": 445,
+            "y": 298,
+            "w": 50,
+            "h": 50,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 50,
+            "sourceH": 50
+        },
+        "dao_1": {
+            "x": 282,
+            "y": 275,
+            "w": 15,
+            "h": 76,
+            "offX": 6,
+            "offY": 0,
+            "sourceW": 30,
+            "sourceH": 76
+        },
+        "dao_2": {
+            "x": 265,
+            "y": 275,
+            "w": 15,
+            "h": 76,
+            "offX": 6,
+            "offY": 0,
+            "sourceW": 30,
+            "sourceH": 76
+        },
+        "dao_3": {
+            "x": 495,
+            "y": 195,
+            "w": 15,
+            "h": 76,
+            "offX": 6,
+            "offY": 0,
+            "sourceW": 30,
+            "sourceH": 76
+        },
+        "dao_4": {
+            "x": 495,
+            "y": 117,
+            "w": 15,
+            "h": 76,
+            "offX": 6,
+            "offY": 0,
+            "sourceW": 30,
+            "sourceH": 76
+        },
+        "dao_5": {
+            "x": 299,
+            "y": 299,
+            "w": 15,
+            "h": 76,
+            "offX": 6,
+            "offY": 0,
+            "sourceW": 30,
+            "sourceH": 76
+        },
+        "di_1": {
+            "x": 305,
+            "y": 225,
+            "w": 72,
+            "h": 72,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 72,
+            "sourceH": 72
+        },
+        "di_2": {
+            "x": 400,
+            "y": 224,
+            "w": 72,
+            "h": 72,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 72,
+            "sourceH": 72
+        },
+        "di_3": {
+            "x": 422,
+            "y": 1,
+            "w": 72,
+            "h": 72,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 72,
+            "sourceH": 72
+        },
+        "icon_kanshipin": {
+            "x": 400,
+            "y": 123,
+            "w": 93,
+            "h": 99,
+            "offX": 0,
+            "offY": 1,
+            "sourceW": 93,
+            "sourceH": 100
+        },
+        "icon_weijiesuo": {
+            "x": 305,
+            "y": 123,
+            "w": 93,
+            "h": 100,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 93,
+            "sourceH": 100
+        },
+        "jiantou_you": {
+            "x": 153,
+            "y": 123,
+            "w": 150,
+            "h": 150,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 150,
+            "sourceH": 150
+        },
+        "jiantou_zuo": {
+            "x": 1,
+            "y": 123,
+            "w": 150,
+            "h": 150,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 150,
+            "sourceH": 150
+        },
+        "logo": {
+            "x": 1,
+            "y": 1,
+            "w": 419,
+            "h": 120,
+            "offX": 47,
+            "offY": 108,
+            "sourceW": 512,
+            "sourceH": 293
+        },
+        "share": {
+            "x": 465,
+            "y": 75,
+            "w": 42,
+            "h": 40,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 42,
+            "sourceH": 40
+        },
+        "video": {
+            "x": 422,
+            "y": 75,
+            "w": 41,
+            "h": 41,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 41,
+            "sourceH": 41
+        },
+        "yuan_1": {
+            "x": 67,
+            "y": 275,
+            "w": 64,
+            "h": 64,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 64,
+            "sourceH": 64
+        },
+        "yuan_2": {
+            "x": 1,
+            "y": 275,
+            "w": 64,
+            "h": 64,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 64,
+            "sourceH": 64
+        },
+        "yuan_3": {
+            "x": 379,
+            "y": 298,
+            "w": 64,
+            "h": 64,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 64,
+            "sourceH": 64
+        },
+        "yuan_4": {
+            "x": 199,
+            "y": 275,
+            "w": 64,
+            "h": 64,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 64,
+            "sourceH": 64
+        },
+        "yuan_5": {
+            "x": 133,
+            "y": 275,
+            "w": 64,
+            "h": 64,
+            "offX": 0,
+            "offY": 0,
+            "sourceW": 64,
+            "sourceH": 64
+        }
+    }
+}
