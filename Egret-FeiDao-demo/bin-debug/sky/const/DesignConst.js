@@ -25,4 +25,3 @@ var DesignConst = (function () {
     return DesignConst;
 }());
 __reflect(DesignConst.prototype, "DesignConst");
-//# sourceMappingURL=DesignConst.js.map

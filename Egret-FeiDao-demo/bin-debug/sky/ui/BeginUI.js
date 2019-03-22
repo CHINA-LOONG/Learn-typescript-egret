@@ -16,4 +16,3 @@ var BeginUI = (function (_super) {
     return BeginUI;
 }(BaseUI));
 __reflect(BeginUI.prototype, "BeginUI");
-//# sourceMappingURL=BeginUI.js.map

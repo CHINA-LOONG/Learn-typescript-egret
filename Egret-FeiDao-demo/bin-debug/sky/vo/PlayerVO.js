@@ -3,6 +3,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var PlayerVO = (function () {
     function PlayerVO() {
+        /** 飞刀的数量 */
         this.knife_num = 0;
         /** 离圆心的距离 */
         this.dis_from_circle = 64;
@@ -20,4 +21,3 @@ var PlayerVO = (function () {
 }());
 __reflect(PlayerVO.prototype, "PlayerVO", ["IPool"]);
 window['PlayerVO'] = PlayerVO;
-//# sourceMappingURL=PlayerVO.js.map

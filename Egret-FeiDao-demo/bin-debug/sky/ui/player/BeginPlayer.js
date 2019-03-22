@@ -23,7 +23,7 @@ var BeginPlayer = (function (_super) {
     BeginPlayer.prototype.initView = function () {
         _super.prototype.initView.call(this);
         this.state = PLAYERSTATE.DEFENCE;
-        this.lbl_name.text = "+2";
+        this.lbl_name.text = "+2"; //覆盖了本来的名字
         this.icon = new egret.Bitmap();
         this.addChild(this.icon);
     };
@@ -92,4 +92,3 @@ var BeginPlayer = (function (_super) {
     return BeginPlayer;
 }(Player));
 __reflect(BeginPlayer.prototype, "BeginPlayer");
-//# sourceMappingURL=BeginPlayer.js.map

@@ -65,4 +65,3 @@ var HttpManager = (function (_super) {
     return HttpManager;
 }(egret.EventDispatcher));
 __reflect(HttpManager.prototype, "HttpManager");
-//# sourceMappingURL=HttpManager.js.map

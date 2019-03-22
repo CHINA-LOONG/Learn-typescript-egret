@@ -7,4 +7,3 @@ var SkinVO = (function () {
     return SkinVO;
 }());
 __reflect(SkinVO.prototype, "SkinVO");
-//# sourceMappingURL=SkinVO.js.map

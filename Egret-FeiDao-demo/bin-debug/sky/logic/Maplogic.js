@@ -24,12 +24,14 @@ var Maplogic = (function () {
             this.init();
         }
     };
+    //初始化界面
     Maplogic.prototype.init = function () {
         this.initBg();
         this.initKnifes();
         this.initPlayers();
         this.updateMapCrood();
     };
+    /**初始化地图，使用生产的3*3位图作为地图 */
     Maplogic.prototype.initBg = function () {
         this.bgs = [];
         for (var i = 0; i < 3; i++) {
@@ -42,16 +44,18 @@ var Maplogic = (function () {
         }
     };
     /** ------------------------------- players ------------------------- */
+    /**初始化角色 */
     Maplogic.prototype.initPlayers = function () {
         //ai球
         for (var i = 0; i < DesignConst.ai_num; i++) {
-            this.addPlayer(i + 1);
+            this.addPlayer(i + 1); //AIID=1/2/3/4/5
         }
         //玩家球
         var myvo = this.getRolePlayerVO();
         this.role = new RolePlayer(myvo);
-        this.players[myvo.id] = this.role;
+        this.players[myvo.id] = this.role; //玩家ID=0
         this.ui.addChild(this.role);
+        //设置摇杆要控制的球
         RockerLogic.getInstance().setControlPlayer(this.role);
     };
     Maplogic.prototype.addPlayer = function (id) {
@@ -98,6 +102,7 @@ var Maplogic = (function () {
         }
         return n;
     };
+    /**初始化场景中的随机飞刀 */
     Maplogic.prototype.initKnifes = function () {
         this.knife_num = 0;
         this.knife_hash = 0;
@@ -179,6 +184,7 @@ var Maplogic = (function () {
     Maplogic.prototype.start = function () {
         var _this = this;
         this.enter_count = 0;
+        /**一秒钟后AI角色开始移动 */
         egret.setTimeout(function () {
             for (var id in _this.players) {
                 var p = _this.players[id];
@@ -269,6 +275,7 @@ var Maplogic = (function () {
     };
     /**更新玩家状态  坐标-->吞噬-->逃逸-->追击-->block */
     Maplogic.prototype.updatePlayerBallsState = function (arr) {
+        //包含了所有玩家角色
         while (arr.length > 0) {
             var p = arr.shift();
             p.update();
@@ -470,4 +477,3 @@ var Maplogic = (function () {
     return Maplogic;
 }());
 __reflect(Maplogic.prototype, "Maplogic");
-//# sourceMappingURL=Maplogic.js.map

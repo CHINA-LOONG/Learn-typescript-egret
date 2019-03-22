@@ -28,4 +28,3 @@ var BaseTextField = (function (_super) {
 }(egret.TextField));
 __reflect(BaseTextField.prototype, "BaseTextField", ["IPool"]);
 window['BaseTextField'] = BaseTextField;
-//# sourceMappingURL=BaseTextField.js.map

@@ -72,4 +72,3 @@ var RolePlayer = (function (_super) {
     return RolePlayer;
 }(Player));
 __reflect(RolePlayer.prototype, "RolePlayer");
-//# sourceMappingURL=RolePlayer.js.map

@@ -37,7 +37,7 @@ class BeginLogic {
 	private checkFit() {
 		this.ui.gp_bg.height = this.ui.rect_bg.height = this.ui.img_bg.height = GameData.stageHeight;
 	}
-
+	//初始化公告信息
 	private initData() {
 		this.ui.lbl_cast_title.text = "2019.2.23更新公告";
 		this.ui.lbl_cast.text = "1.优化防御状态；\n" +
@@ -50,17 +50,21 @@ class BeginLogic {
 			"2.增加击杀效果\n" +
 			"";
 	}
-
+	//初始化界面内容 [背景/公告/角色]
 	private initView() {
+		//通过组合方式生成bitmap，作为背景
 		this.bmp_bg = Maplogic.getInstance().getMapBg(GameData.stageWidth, GameData.stageHeight);
 		this.ui.gp_bg.addChild(this.bmp_bg);
 
+		//公告面板
 		this.cast_bg = Maplogic.getInstance().getMapBg(640, 780);
 		this.cast_bg.x = 55;
 		this.cast_bg.y = 287;
 		this.ui.gp_cast.addChildAt(this.cast_bg, 1);
 
+		//角色参数
 		this.crtVO = Maplogic.getInstance().getBeginPlayerVO();
+		//设置角色的外观和赋值参数
 		this.beginplayer = new BeginPlayer(this.crtVO);
 		if (this.checkVersion()) {
 			this.beginplayer.updateCenter(BEGINSTATE.NORMAL);
@@ -68,12 +72,14 @@ class BeginLogic {
 		}
 		else {
 			// this.ui.img_logo.visible = true;
+			//显示分享标志并修改名字+2
 			this.beginplayer.updateCenter(BEGINSTATE.SHAREADD);
 		}
 		this.beginplayer.x = this.ui.width / 2;
 		this.beginplayer.y = this.ui.img_left.y + this.ui.img_left.height / 2;
 		this.ui.addChildAt(this.beginplayer, 2);
 
+		//版本号检查，是否显示公告
 		this.ui.gp_cast.visible = this.checkCast();
 
 		platform.bannershow(GameConst.bannerAdId, GameData.stageHeight);
@@ -163,13 +169,13 @@ class BeginLogic {
 		this.ui.img_right.visible = this.crt < this.max;
 		this.initSkin();
 	}
-
+	//更新角色的外观
 	private initSkin() {
 		let vo = SkinLogic.getInstance().getSkinVOByID(this.crt);
 		if (vo != null) {
 			this.crtVO.skinvo = vo;
 			this.beginplayer.updateCenter(BEGINSTATE.SHAREADD);
-			this.beginplayer.updateVO(this.crtVO);
+			this.beginplayer.updateVO(this.crtVO);//已经创建过，不会有名字等赋值
 		}
 	}
 
@@ -239,8 +245,11 @@ class BeginLogic {
 			return;
 		}
 		let obj = {
+			/**背景 */
 			bgId: this.crtVO.bg_id,
+			/**皮肤 */
 			skinId: this.crtVO.skinvo.id,
+			/**飞刀数 */
 			num: this.crtVO.knife_num + this.addknife
 		}
 		GameLogic.getInstance().openUI(GameData.main, new GameUI(), obj);

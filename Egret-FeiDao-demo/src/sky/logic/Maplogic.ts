@@ -30,7 +30,7 @@ class Maplogic {
 			this.init();
 		}
 	}
-
+	//初始化界面
 	private init() {
 		this.initBg();
 		this.initKnifes();
@@ -38,6 +38,7 @@ class Maplogic {
 		this.updateMapCrood();
 	}
 
+	/**初始化地图，使用生产的3*3位图作为地图 */
 	private initBg() {
 		this.bgs = [];
 		for (let i = 0; i < 3; i++) {
@@ -50,21 +51,20 @@ class Maplogic {
 		}
 	}
 
-
-
 	/** ------------------------------- players ------------------------- */
-
+	/**初始化角色 */
 	private initPlayers() {
 		//ai球
 		for (let i = 0; i < DesignConst.ai_num; i++) {
-			this.addPlayer(i + 1);
+			this.addPlayer(i + 1);			//AIID=1/2/3/4/5
 		}
 
 		//玩家球
 		let myvo = this.getRolePlayerVO();
 		this.role = new RolePlayer(myvo);
-		this.players[myvo.id] = this.role;
+		this.players[myvo.id] = this.role;   //玩家ID=0
 		this.ui.addChild(this.role);
+		//设置摇杆要控制的球
 		RockerLogic.getInstance().setControlPlayer(this.role);
 	}
 
@@ -115,7 +115,7 @@ class Maplogic {
 		}
 		return n;
 	}
-
+	/**初始化场景中的随机飞刀 */
 	private initKnifes() {
 		this.knife_num = 0;
 		this.knife_hash = 0;
@@ -205,6 +205,7 @@ class Maplogic {
 
 	public start() {
 		this.enter_count = 0;
+		/**一秒钟后AI角色开始移动 */
 		egret.setTimeout(() => {
 			for (let id in this.players) {
 				let p = this.players[id];
@@ -313,6 +314,7 @@ class Maplogic {
 	}
 	/**更新玩家状态  坐标-->吞噬-->逃逸-->追击-->block */
 	private updatePlayerBallsState(arr: Player[]) {
+		//包含了所有玩家角色
 		while (arr.length > 0) {
 			let p = arr.shift();
 			p.update();

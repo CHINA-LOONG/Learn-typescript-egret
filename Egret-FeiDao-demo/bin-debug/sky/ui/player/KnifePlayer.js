@@ -59,4 +59,3 @@ var KnifePlayer = (function (_super) {
 }(egret.DisplayObjectContainer));
 __reflect(KnifePlayer.prototype, "KnifePlayer", ["IPool"]);
 window['KnifePlayer'] = KnifePlayer;
-//# sourceMappingURL=KnifePlayer.js.map

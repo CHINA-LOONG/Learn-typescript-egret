@@ -85,6 +85,7 @@ class RockerLogic {
 		if (Maplogic.getInstance().role != null && Maplogic.getInstance().role.state == PLAYERSTATE.DEAD) {
 			return;
 		}
+		this.ui.visible = true;
 		//点击摇杆时 屏蔽所有碰撞
 		GameData.GameStage.$hitTest = (x, y) => this.ui;
 		this.touchID = e.touchPointID;
@@ -138,6 +139,8 @@ class RockerLogic {
 		if (Maplogic.getInstance().role != null && Maplogic.getInstance().role.state == PLAYERSTATE.DEAD) {
 			return;
 		}
+
+		this.ui.visible = false;
 		this.p2.x = e.stageX;
 		this.p2.y = e.stageY;
 		if (this.controlplayer != null) {

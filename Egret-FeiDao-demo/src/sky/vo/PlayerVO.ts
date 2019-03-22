@@ -10,7 +10,7 @@ class PlayerVO implements IPool {
 	public bg_id:string;
 
 	public skinvo:SkinVO;
-
+	/** 飞刀的数量 */
 	public knife_num:number = 0;
 
 	public circleRadius:number;
@@ -21,7 +21,7 @@ class PlayerVO implements IPool {
 
 	/** 离圆心的距离 */
 	public dis_from_circle:number = 64;
-
+	/** 飞刀转的速度 */
 	public turn_speed:number;
 
 	public move_speed:number;

@@ -78,6 +78,7 @@ var RockerLogic = (function () {
         if (Maplogic.getInstance().role != null && Maplogic.getInstance().role.state == PLAYERSTATE.DEAD) {
             return;
         }
+        this.ui.visible = true;
         //点击摇杆时 屏蔽所有碰撞
         GameData.GameStage.$hitTest = function (x, y) { return _this.ui; };
         this.touchID = e.touchPointID;
@@ -126,6 +127,7 @@ var RockerLogic = (function () {
         if (Maplogic.getInstance().role != null && Maplogic.getInstance().role.state == PLAYERSTATE.DEAD) {
             return;
         }
+        this.ui.visible = false;
         this.p2.x = e.stageX;
         this.p2.y = e.stageY;
         if (this.controlplayer != null) {
@@ -158,4 +160,3 @@ var RockerLogic = (function () {
     return RockerLogic;
 }());
 __reflect(RockerLogic.prototype, "RockerLogic");
-//# sourceMappingURL=RockerLogic.js.map

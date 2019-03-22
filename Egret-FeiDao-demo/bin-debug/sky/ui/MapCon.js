@@ -22,4 +22,3 @@ var MapCon = (function (_super) {
     return MapCon;
 }(egret.DisplayObjectContainer));
 __reflect(MapCon.prototype, "MapCon");
-//# sourceMappingURL=MapCon.js.map

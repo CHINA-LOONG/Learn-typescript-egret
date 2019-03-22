@@ -29,4 +29,3 @@ var SkinLogic = (function () {
     return SkinLogic;
 }());
 __reflect(SkinLogic.prototype, "SkinLogic");
-//# sourceMappingURL=SkinLogic.js.map

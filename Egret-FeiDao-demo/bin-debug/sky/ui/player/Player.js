@@ -122,12 +122,15 @@ var Player = (function (_super) {
     };
     /** 每一帧执行 */
     Player.prototype.update = function () {
-        this.con.rotation += this.vo.turn_speed;
+        this.con.rotation += this.vo.turn_speed; //更新转动
+        //更新位置
         if (this.vo.direction != null && this.vo.move_speed != null) {
             this.updateCrood();
         }
+        //检测吃球
         this.checkEatKnife();
         this.frame++;
+        //防御的时候每40帧播放一个光圈
         if (this.state == PLAYERSTATE.DEFENCE && this.frame % 40 == 0) {
             this.addCircle();
         }
@@ -139,6 +142,7 @@ var Player = (function (_super) {
             this.updateKnifeInArr(this.knife_index);
         }
     };
+    //防御的光圈
     Player.prototype.addCircle = function () {
         var bmp = ObjectPool.getObject("BaseBitmap");
         var r = Math.floor(Math.random() * 5 + 1);
@@ -181,6 +185,9 @@ var Player = (function (_super) {
         this.updateBg();
         this.updateLblName();
     };
+    /**
+     * 更新拥有的飞刀外观 以及状态
+     */
     Player.prototype.updateKnifes = function () {
         var n = this.vo.knife_num;
         if (n >= DesignConst.player_knife_max) {
@@ -224,6 +231,9 @@ var Player = (function (_super) {
             this.con.addChild(knife);
         }
     };
+    /**
+     * 更新飞刀的半径
+     */
     Player.prototype.updateKnifeInArr = function (i) {
         var knife = this.knifes[i];
         if (knife != null) {
@@ -252,6 +262,9 @@ var Player = (function (_super) {
             }
         }
     };
+    /**
+     * 更新背景的显示坐标大小
+     */
     Player.prototype.updateBg = function () {
         this.bg_diameter = this.vo.circleRadius * 2;
         this.bg.width = this.bg_diameter;
@@ -259,6 +272,9 @@ var Player = (function (_super) {
         this.bg.anchorOffsetX = this.vo.circleRadius;
         this.bg.anchorOffsetY = this.vo.circleRadius;
     };
+    /**
+     * 更新玩家名字大小位置
+     */
     Player.prototype.updateLblName = function () {
         this.lbl_name.size = this.vo.circleRadius < 50 ? 24 : 32;
         this.lbl_name.width = this.bg_diameter;
@@ -279,4 +295,3 @@ var Player = (function (_super) {
 }(egret.DisplayObjectContainer));
 __reflect(Player.prototype, "Player", ["IPool"]);
 window['Player'] = Player;
-//# sourceMappingURL=Player.js.map

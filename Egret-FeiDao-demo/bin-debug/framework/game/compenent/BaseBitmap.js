@@ -32,4 +32,3 @@ var BaseBitmap = (function (_super) {
 }(egret.Bitmap));
 __reflect(BaseBitmap.prototype, "BaseBitmap", ["IPool"]);
 window['BaseBitmap'] = BaseBitmap;
-//# sourceMappingURL=BaseBitmap.js.map

@@ -52,4 +52,3 @@ var HttpEvent = (function (_super) {
     return HttpEvent;
 }(egret.Event));
 __reflect(HttpEvent.prototype, "HttpEvent");
-//# sourceMappingURL=HttpEvent.js.map

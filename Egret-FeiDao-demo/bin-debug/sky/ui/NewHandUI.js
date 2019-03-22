@@ -7,4 +7,3 @@ var NewHandUI = (function () {
     return NewHandUI;
 }());
 __reflect(NewHandUI.prototype, "NewHandUI");
-//# sourceMappingURL=NewHandUI.js.map

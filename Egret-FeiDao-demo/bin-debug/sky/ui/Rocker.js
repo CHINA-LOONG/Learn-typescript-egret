@@ -16,4 +16,3 @@ var Rocker = (function (_super) {
     return Rocker;
 }(BaseUI));
 __reflect(Rocker.prototype, "Rocker");
-//# sourceMappingURL=Rocker.js.map

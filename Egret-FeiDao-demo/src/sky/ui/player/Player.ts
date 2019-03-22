@@ -135,12 +135,15 @@ class Player extends egret.DisplayObjectContainer implements IPool {
 
 	/** 每一帧执行 */
 	public update() {
-		this.con.rotation += this.vo.turn_speed;
+		this.con.rotation += this.vo.turn_speed;//更新转动
+		//更新位置
 		if (this.vo.direction != null && this.vo.move_speed != null) {
 			this.updateCrood();
 		}
+		//检测吃球
 		this.checkEatKnife();
 		this.frame++;
+		//防御的时候每40帧播放一个光圈
 		if (this.state == PLAYERSTATE.DEFENCE && this.frame % 40 == 0) {
 			this.addCircle();
 		}
@@ -153,7 +156,7 @@ class Player extends egret.DisplayObjectContainer implements IPool {
 		}
 
 	}
-
+	//防御的光圈
 	protected addCircle() {
 		let bmp = ObjectPool.getObject("BaseBitmap") as BaseBitmap;
 		let r = Math.floor(Math.random() * 5 + 1);
@@ -200,7 +203,9 @@ class Player extends egret.DisplayObjectContainer implements IPool {
 		this.updateBg();
 		this.updateLblName();
 	}
-
+	/**
+	 * 更新拥有的飞刀外观 以及状态 
+	 */
 	protected updateKnifes() {
 		let n = this.vo.knife_num;
 		if (n >= DesignConst.player_knife_max) {
@@ -251,6 +256,10 @@ class Player extends egret.DisplayObjectContainer implements IPool {
 	private bg1: egret.Bitmap;
 
 	protected knife_index: number;
+
+	/**
+	 * 更新飞刀的半径
+	 */
 	protected updateKnifeInArr(i: number) {
 		let knife = this.knifes[i];
 		if (knife != null) {
@@ -282,6 +291,9 @@ class Player extends egret.DisplayObjectContainer implements IPool {
 
 	}
 
+	/**
+	 * 更新背景的显示坐标大小
+	 */
 	protected updateBg() {
 		this.bg_diameter = this.vo.circleRadius * 2;
 		this.bg.width = this.bg_diameter;
@@ -289,7 +301,9 @@ class Player extends egret.DisplayObjectContainer implements IPool {
 		this.bg.anchorOffsetX = this.vo.circleRadius;
 		this.bg.anchorOffsetY = this.vo.circleRadius;
 	}
-
+	/**
+	 * 更新玩家名字大小位置
+	 */
 	protected updateLblName() {
 		this.lbl_name.size = this.vo.circleRadius < 50 ? 24 : 32;
 		this.lbl_name.width = this.bg_diameter;

@@ -57,4 +57,3 @@ var ObjectPool = (function () {
     return ObjectPool;
 }());
 __reflect(ObjectPool.prototype, "ObjectPool");
-//# sourceMappingURL=ObjectPool.js.map

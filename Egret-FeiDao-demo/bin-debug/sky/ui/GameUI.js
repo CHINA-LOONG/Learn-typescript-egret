@@ -16,4 +16,3 @@ var GameUI = (function (_super) {
     return GameUI;
 }(BaseUI));
 __reflect(GameUI.prototype, "GameUI");
-//# sourceMappingURL=GameUI.js.map

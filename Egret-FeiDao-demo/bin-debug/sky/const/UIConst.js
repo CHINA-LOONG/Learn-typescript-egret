@@ -10,4 +10,3 @@ var UIConst = (function () {
     return UIConst;
 }());
 __reflect(UIConst.prototype, "UIConst");
-//# sourceMappingURL=UIConst.js.map

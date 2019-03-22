@@ -44,7 +44,9 @@ class GameLogic {
 	}
 
 	private initView() {
+		//地图
 		Maplogic.getInstance().openUI(this.ui, new MapCon(), this.args);
+		//操作的摇杆
 		RockerLogic.getInstance().openUI(this.ui, new Rocker());
 
 		this.initRank();
@@ -87,14 +89,15 @@ class GameLogic {
 
 
 	private game_countId: number;
+	/**开始游戏 */
 	private startGame() {
 		platform.bannershow(GameConst.bannerAdId, GameData.stageHeight);
 
 		this.ui.gp_over.x = -this.ui.gp_over.width;
 		this.ui.gp_over.visible = false;
 		this.gamestate = GAMESTATE.START;
-		RockerLogic.getInstance().start();
-		Maplogic.getInstance().start();
+		RockerLogic.getInstance().start();	//摇杆逻辑启动
+		Maplogic.getInstance().start();		//地图逻辑启动
 
 		this.lefttime = DesignConst.gametime;
 		this.game_countId = egret.setInterval(this.countDown, this, 1000);

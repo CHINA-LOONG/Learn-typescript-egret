@@ -1,6 +1,6 @@
 class BeginPlayer extends Player {
 	public constructor(vo: PlayerVO) {
-		super(vo);
+		super(vo);	//初始化外观形象名称等
 		this.touchEnabled = true;
 		this.touchChildren = false;
 	}
@@ -16,7 +16,7 @@ class BeginPlayer extends Player {
 	protected initView() {
 		super.initView();
 		this.state = PLAYERSTATE.DEFENCE;
-		this.lbl_name.text = "+2";
+		this.lbl_name.text = "+2";//覆盖了本来的名字
 		this.icon = new egret.Bitmap();
 		this.addChild(this.icon);
 	}
