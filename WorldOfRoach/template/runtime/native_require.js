@@ -11,7 +11,6 @@ var game_file_list = [
 	"libs/modules/tween/tween.js",
 	"libs/modules/socket/socket.js",
 	"libs/modules/dragonBones/dragonBones.js",
-	"polyfill/promise.js",
 	"bin-debug/wor/data/datas/HistoryData.js",
 	"bin-debug/wor/proxy/modules/ModuleBase.js",
 	"bin-debug/nodep/view/container/GameWindow.js",
