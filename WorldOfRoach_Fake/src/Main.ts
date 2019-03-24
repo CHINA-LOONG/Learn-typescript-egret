@@ -63,12 +63,6 @@ class Main extends eui.UILayer {
     private async runGame() {
         await this.loadResource()
         this.createGameScene();
-        // const result = await RES.getResAsync("description_json")
-        // this.startAnimation(result);
-        await platform.login();
-        const userInfo = await platform.getUserInfo();
-        console.log(userInfo);
-
     }
 
     private async loadResource() {
@@ -102,5 +96,20 @@ class Main extends eui.UILayer {
      */
     protected createGameScene(): void {
         LogTrace.log("application loadcompleted...");
+
+        WindowsMgr.instance.initGame(this);
+        RenderMgr.instance.startRender(this.stage);
+
+        WindowsMgr.instance.addLayer(LayerType.LAYER_GROUND,new GameLayer());
+        WindowsMgr.instance.addLayer(LayerType.LAYER_MENU,new GameLayer());
+        WindowsMgr.instance.addLayer(LayerType.LAYER_UI,new GameLayer());
+        WindowsMgr.instance.addLayer(LayerType.LAYER_POP,new GameLayer());
+
+        
+    }
+
+    private startGame(){
+        // DelayCall.call(200,this.delayStart,this);
+        WindowsMgr.instance.openWindow(null);
     }
 }
