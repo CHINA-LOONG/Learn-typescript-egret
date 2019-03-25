@@ -105,7 +105,7 @@ class Main extends eui.UILayer {
         WindowsMgr.instance.addLayer(LayerType.LAYER_UI,new GameLayer());
         WindowsMgr.instance.addLayer(LayerType.LAYER_POP,new GameLayer());
 
-        
+        this.startGame();
     }
 
     private startGame(){

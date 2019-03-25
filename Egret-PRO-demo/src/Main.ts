@@ -34,7 +34,7 @@ class Main extends eui.UILayer {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE,this.onConfigComplete,this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
-        RES.loadGroup("loading",1);
+        RES.loadGroup("loading",1);//优先加载的loading界面资源
         RES.loadGroup("preload");
     }
     /**
@@ -75,5 +75,4 @@ class Main extends eui.UILayer {
 
 
 }
-
 window["Main"] = Main;

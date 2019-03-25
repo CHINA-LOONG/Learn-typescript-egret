@@ -77,7 +77,6 @@ module game {
          */
         public initData(): void {
 
-
         }
 
         private readExcelButtonClick(event: egret.TouchEvent): void {
