@@ -100,16 +100,16 @@ class Main extends eui.UILayer {
         WindowsMgr.instance.initGame(this);
         RenderMgr.instance.startRender(this.stage);
 
-        WindowsMgr.instance.addLayer(LayerType.LAYER_GROUND,new GameLayer());
+        //初始化层级
+        WindowsMgr.instance.addLayer(LayerType.LAYER_GROUND, new GameLayer());
         WindowsMgr.instance.addLayer(LayerType.LAYER_MENU,new GameLayer());
-        WindowsMgr.instance.addLayer(LayerType.LAYER_UI,new GameLayer());
+        WindowsMgr.instance.addLayer(LayerType.LAYER_UI, new GameLayer());
         WindowsMgr.instance.addLayer(LayerType.LAYER_POP,new GameLayer());
-
         this.startGame();
     }
 
-    private startGame(){
+    private startGame() {
         // DelayCall.call(200,this.delayStart,this);
-        WindowsMgr.instance.openWindow(null);
+        WindowsMgr.instance.openWindow(StartWindow);
     }
 }

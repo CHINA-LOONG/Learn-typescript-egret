@@ -9,4 +9,14 @@ class GameWindow extends eui.Component {
      */
     public typeName: string;
 
+
+    	protected partAdded(partName: string, instance: any): void {
+		super.partAdded(partName, instance);
+	}
+
+
+	protected childrenCreated(): void {
+		super.childrenCreated();
+	}
+
 }

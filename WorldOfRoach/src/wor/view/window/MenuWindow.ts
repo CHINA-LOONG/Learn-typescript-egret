@@ -1,7 +1,7 @@
 /**
  * 游戏登陆
  */
-class MenuWindow extends GameWindow implements eui.UIComponent {
+class MenuWindow extends GameWindow/* implements eui.UIComponent */{
 	public constructor() {
 		super();
 		this.typeName = WorWindowType.MENU_WINDOW;

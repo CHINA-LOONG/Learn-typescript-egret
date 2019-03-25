@@ -13,10 +13,10 @@
 	"game": [
 		"bin-debug/wor/data/datas/HistoryData.js",
 		"bin-debug/wor/proxy/modules/ModuleBase.js",
-		"bin-debug/wor/data/datas/GameTimeData.js",
 		"bin-debug/nodep/view/container/GameWindow.js",
 		"bin-debug/nodep/world/tiledWorld/core/FocusRole.js",
 		"bin-debug/wor/data/datas/EquipData.js",
+		"bin-debug/wor/data/datas/GameTimeData.js",
 		"bin-debug/nodep/data/type/WindowType.js",
 		"bin-debug/wor/data/datas/ItemData.js",
 		"bin-debug/wor/data/datas/LloydMapData.js",
@@ -60,7 +60,7 @@
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/nodep/world/tiledWorld/core/IFocus.js",
 		"bin-debug/nodep/world/tiledWorld/core/IRole.js",
-		"bin-debug/wor/view/window/TopToolBar.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/nodep/world/tiledWorld/floors/IFloor.js",
 		"bin-debug/wor/data/GameConfig.js",
 		"bin-debug/wor/data/GameData.js",
@@ -109,6 +109,6 @@
 		"bin-debug/wor/view/window/MiniMap.js",
 		"bin-debug/wor/view/window/OptWindow.js",
 		"bin-debug/wor/view/window/RoleWindow.js",
-		"bin-debug/LoadingUI.js"
+		"bin-debug/wor/view/window/TopToolBar.js"
 	]
 }
