@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="AlertWindowSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui"
+        xmlns:w="http://ns.egret.com/wing">
+	<w:Config id="169b93f5a03"></w:Config>
+	<e:Group width="400" height="230" horizontalCenter="0" verticalCenter="0">
+		<e:Image anchorOffsetX="0" anchorOffsetY="0" source="header_png" scale9Grid="2,2,12,12" fillMode="scale" height="30" y="0" left="0" right="0" x="0" scaleX="1" scaleY="1"/>
+		<e:Image anchorOffsetX="0" anchorOffsetY="0" scale9Grid="2,2,12,12" fillMode="scale" left="0" right="0" bottom="0" top="30" source="border_png" x="0" y="30" scaleX="1" scaleY="1"/>
+		<e:Button id="okBtn" label="确定" x="75" y="175" scaleX="1" scaleY="1"/>
+		<e:Button id="cancelBtn" label="取消" x="230" y="175" scaleX="1" scaleY="1"/>
+		<e:Label id="titleTxt" text="提示" y="8" size="14" right="0" left="10" x="10" scaleX="1" scaleY="1"/>
+		<e:Label id="infoTxt" text="...的e" x="70.5" y="61" anchorOffsetX="0" width="269" anchorOffsetY="0" height="96" textColor="0x000000" multiline="true" wordWrap="true" size="16" verticalAlign="middle" textAlign="center" scaleX="1" scaleY="1"/>
+	</e:Group>
+</e:Skin>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="StartWindowSkin" width="400" height="300" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="169b55a3702" ></w:Config>
-	<e:Button id="newGame" label="新游戏" x="54" y="52"/>
-	<e:Button id="oldGame" label="继续游戏" x="55" y="133"/>
+	<e:Button id="newGame" label="新游戏" horizontalCenter="0" verticalCenter="0"/>
+	<e:Button id="oldGame" label="继续游戏" horizontalCenter="0" y="191"/>
 </e:Skin>

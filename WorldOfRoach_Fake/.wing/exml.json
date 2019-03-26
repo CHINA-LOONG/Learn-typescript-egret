@@ -3,5 +3,15 @@
         "path": "../resource/eui_skins/window/StartWindow.ts",
         "class": "StartWindow",
         "parentPath": ""
+    },
+    "169b8b78dce": {
+        "path": "wor\\view\\MiniMap.ts",
+        "class": "MiniMap",
+        "parentPath": ""
+    },
+    "169b93f5a03": {
+        "path": "nodep\\view\\AlertWindow.ts",
+        "class": "AlertWindow",
+        "parentPath": "resource/eui_skins/window/MiniMap.exml"
     }
 }

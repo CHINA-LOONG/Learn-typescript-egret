@@ -12,7 +12,10 @@
 		"eui.ToggleSwitch": "resource/eui_skins/ToggleSwitchSkin.exml",
 		"eui.VScrollBar": "resource/eui_skins/VScrollBarSkin.exml",
 		"eui.VSlider": "resource/eui_skins/VSliderSkin.exml",
-		"eui.ItemRenderer": "resource/eui_skins/ItemRendererSkin.exml"
+		"eui.ItemRenderer": "resource/eui_skins/ItemRendererSkin.exml",
+		"StartWindow": "resource/eui_skins/window/StartWindow.exml",
+		"MiniMap": "resource/eui_skins/window/MiniMap.exml",
+		"AlertWindow": "resource/eui_skins/window/AlertWindow.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -29,6 +32,8 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
+		"resource/eui_skins/window/AlertWindow.exml",
+		"resource/eui_skins/window/MiniMap.exml",
 		"resource/eui_skins/window/StartWindow.exml"
 	],
 	"path": "resource/default.thm.json"

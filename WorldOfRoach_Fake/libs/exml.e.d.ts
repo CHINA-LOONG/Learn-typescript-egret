@@ -50,5 +50,9 @@ declare module skins{
 	class VSliderSkin extends eui.Skin{
 	}
 }
+declare class AlertWindowSkin extends eui.Skin{
+}
+declare class MiniMapSkin extends eui.Skin{
+}
 declare class StartWindowSkin extends eui.Skin{
 }

@@ -23,7 +23,14 @@ class WindowsMgr {
 		if (WindowsMgr._ins != null) {
 			throw (new Error("单例"));
 		}
+		this._layerMap = new Map<string, GameLayerInterface>();
+		this._windowMap = new Map<any, GameWindow>();
 		LogTrace.log("create WinsManager!");
+	}
+	private initScale(): void {
+		LogTrace.log(WindowsMgr.stageWidth + "_" + WindowsMgr.stageHeight);
+		WindowsMgr.scaleX = WindowsMgr.stageWidth / 1254;
+		WindowsMgr.scaleY = WindowsMgr.scaleX;
 	}
 
 
@@ -48,16 +55,48 @@ class WindowsMgr {
 				this._layerMap.get(win.layerType).addWindow(win);
 				LogTrace.log("openWindow->" + win.typeName);
 			}
-			else{
-
+			else {
 				throw (new Error("NodepErrorType.LAYER_NO_EXISTENT"));
 			}
 		}
 	}
+	public closeWindow(target: any): void {
+		if (!target)
+			return;
+		let win: GameWindow = null;
+		switch (typeof target) {
+			case "object":
+				win = target as GameWindow;
+				break;
+			case "string":
+				break;
+			case "function":
+				win = this._windowMap.get(target);
+				break;
+		}
+		if (!win || !win.parent)
+			return;
+		if (win.beforeClose())
+			(win.parent as GameLayer).removeWindow(win);
+	}
+	/**
+	 * 刷新指定的界面,只会更新在显示列表中的
+	 */
+	public updateWindow(updateType: number, typeName: Array<string>, updateData: any = null): void {
+		this._windowMap.forEach(function (win) {
+			if (typeName.indexOf(win.typeName) >= 0 && win.stage != null)
+				win.update(updateType, updateData);
+		}, this);
+	}
+
 	private stageResizeHandler(evt: egret.Event): void {
 		WindowsMgr.stageWidth = this._baseUI.stage.stageWidth;
 		WindowsMgr.stageHeight = this._baseUI.stage.stageHeight;
-
+		this.initScale();
 		LogTrace.log("stageReszie!");
+
+		this._layerMap.forEach(function (layer) {
+			layer.resize();
+		}, this);
 	}
 }
