@@ -34,7 +34,7 @@ class Tri2D {
 	/**刷新三角形的重要属性 */
 	public flush():void{
 		this.inited = true;
-		this.center = TriangleUtil
+		// this.center = TriangleUtil
 	}
 
 	/**三角形被销毁*/
