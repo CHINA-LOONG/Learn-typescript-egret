@@ -1,0 +1,4 @@
+class WorldManager {
+	public constructor() {
+	}
+}

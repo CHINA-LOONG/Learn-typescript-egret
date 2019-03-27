@@ -5,4 +5,7 @@
 class UpdateType {
     //玩家历史数据返回
 	public static USER_HISTORY_BACLL:number = 10001;
+
+    
+    public static MAIN_LOADING_SET:number = 9990001;
 }

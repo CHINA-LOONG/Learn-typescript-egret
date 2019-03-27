@@ -13,5 +13,10 @@
         "path": "nodep\\view\\AlertWindow.ts",
         "class": "AlertWindow",
         "parentPath": "resource/eui_skins/window/MiniMap.exml"
+    },
+    "169bcd92734": {
+        "path": "wor\\view\\MainLoaderWindow.ts",
+        "class": "MainLoaderWindow",
+        "parentPath": ""
     }
 }

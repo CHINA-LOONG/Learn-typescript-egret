@@ -15,7 +15,8 @@
 		"eui.ItemRenderer": "resource/eui_skins/ItemRendererSkin.exml",
 		"StartWindow": "resource/eui_skins/window/StartWindow.exml",
 		"MiniMap": "resource/eui_skins/window/MiniMap.exml",
-		"AlertWindow": "resource/eui_skins/window/AlertWindow.exml"
+		"AlertWindow": "resource/eui_skins/window/AlertWindow.exml",
+		"MainLoaderWindow": "resource/eui_skins/window/MainLoaderWindow.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -33,6 +34,7 @@
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
 		"resource/eui_skins/window/AlertWindow.exml",
+		"resource/eui_skins/window/MainLoaderWindow.exml",
 		"resource/eui_skins/window/MiniMap.exml",
 		"resource/eui_skins/window/StartWindow.exml"
 	],

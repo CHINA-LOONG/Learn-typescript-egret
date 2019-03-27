@@ -52,6 +52,8 @@ declare module skins{
 }
 declare class AlertWindowSkin extends eui.Skin{
 }
+declare class MainLoaderWindowSkin extends eui.Skin{
+}
 declare class MiniMapSkin extends eui.Skin{
 }
 declare class StartWindowSkin extends eui.Skin{

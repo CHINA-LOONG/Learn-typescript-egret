@@ -88,7 +88,9 @@ class WindowsMgr {
 				win.update(updateType, updateData);
 		}, this);
 	}
-
+	/**
+	 * 屏幕尺寸变化
+	 */
 	private stageResizeHandler(evt: egret.Event): void {
 		WindowsMgr.stageWidth = this._baseUI.stage.stageWidth;
 		WindowsMgr.stageHeight = this._baseUI.stage.stageHeight;
@@ -98,5 +100,21 @@ class WindowsMgr {
 		this._layerMap.forEach(function (layer) {
 			layer.resize();
 		}, this);
+	}
+
+	/**
+	 * 指定回收
+	 */
+	public gcWindow(key:any):void
+	{
+
+	}
+
+	/**
+	 * 回收所有没有在显示列表中的界面
+	 */
+	public gcWindowAll():void
+	{
+
 	}
 }

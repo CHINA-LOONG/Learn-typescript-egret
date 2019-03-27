@@ -40,7 +40,11 @@ class StartWindow extends GameWindow {
 	private optionHandler(evt: egret.TouchEvent): void {
 		if (evt.target == this.newGame) {
 			LogTrace.log("new game start");
-			AlertWindow.alertShow("确定要开始新的冒险吗？这将覆盖原有的存档！", null, this);
+			if (GameData.historyData.hasData) {
+				AlertWindow.alertShow("确定要开始新的冒险吗？这将覆盖原有的存档！", this.startNewGame, this);
+			} else {
+				this.startNewGame(true);
+			}
 		}
 		if (evt.target == this.oldGame) {
 			LogTrace.log("old game start");
@@ -48,8 +52,10 @@ class StartWindow extends GameWindow {
 	}
 
 	private startNewGame(flag: boolean): void {
-		LogTrace.log("startGame for new!");
-		
+		if (flag) {
+			LogTrace.log("startGame for new!");
+			GameManager.instance.startNewGame();
+		}
 	}
 	private startOldGame(): void {
 		LogTrace.log("startGame for old");

@@ -20,4 +20,16 @@ class UserModule extends ModuleBase {
 		return  null;
 	}
 
+	//创建游戏角色
+	private createUser(type:number,mess:string):string
+	{
+		if(type==UserModule.TYPE_RQ)
+			return mess;
+		else
+		{
+			LogTrace.log("create new player completed!!");
+			GameManager.instance.startOldGame();
+		}
+		return null;
+	}
 }
