@@ -24,9 +24,9 @@ class Tri2D {
 		this.vertex[2].tris.push(this);
 		this.inited = autoBuild;
 		this.edges[0] = new Edge2D(points[0],points[1]);
-		this.edges[0] = new Edge2D(points[0],points[1]);
-		this.edges[0] = new Edge2D(points[0],points[1]);
-		if(!this.inited){
+		this.edges[1] = new Edge2D(points[1],points[2]);
+		this.edges[2] = new Edge2D(points[2],points[0]);
+		if(this.inited){
 			this.flush();
 		}
 	}
@@ -34,7 +34,8 @@ class Tri2D {
 	/**刷新三角形的重要属性 */
 	public flush():void{
 		this.inited = true;
-		// this.center = TriangleUtil
+		this.center = TriangleUtil.getCircumcirclePoint(this);
+		this.circumR = TriangleUtil.getCircumcircleR(this);
 	}
 
 	/**三角形被销毁*/

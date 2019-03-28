@@ -4,12 +4,17 @@
  * @version 1.0
  */
 class LloydUtil {
-
+	/**辅助顶点列表 */
 	private _assistPoints: Array<Point2D>;
+	/**所有顶点列表 */
 	private _points: Array<Point2D>;
+	/**生成三角形列表 */
 	private _tris: Array<Tri2D>;
+	/**构建多边形列表 */
 	private _polgons: Array<Pol2D>;
+	/**图形宽 */
 	private _maxW: number;
+	/**图形高 */
 	private _maxH: number;
 
 	public constructor(points: Array<number>, maxW: number, maxH: number) {
@@ -52,13 +57,13 @@ class LloydUtil {
 		//排除公共边之后剩余的边
 		let edges: Array<Edge2D> = this.delEdgeInCommon(tris);
 		//删除包含此点三角形
-		while(tris.length>0){
+		while (tris.length > 0) {
 			this.delTri(tris.pop());
 		}
 		//用插入的点和之前的边生成新的三角形
-		while(edges.length>0){
-			let edge:Edge2D = edges.pop();
-			let tri:Tri2D = this.addTri([p,edge.startPoint,edge.endPoint]);
+		while (edges.length > 0) {
+			let edge: Edge2D = edges.pop();
+			let tri: Tri2D = this.addTri([p, edge.startPoint, edge.endPoint]);
 		}
 	}
 
@@ -115,10 +120,10 @@ class LloydUtil {
 	 * @return
 	 */
 	private addTri(points: Array<Point2D>): Tri2D {
-		let v: Array<Point2D> = new Array<Point2D>();
+		let v: Array<Point2D> = new Array<Point2D>(3);
 		v[0] = points[0];
 		v[1] = points[1];
-		v[2] = points[3];
+		v[2] = points[2];
 		let tri: Tri2D = new Tri2D(v);
 		this._tris.push(tri);
 		return tri;
@@ -127,10 +132,88 @@ class LloydUtil {
 	 * 从列表中删除一个三角形
 	 * @param tri
 	 */
-	private delTri(tri:Tri2D):void{
+	private delTri(tri: Tri2D): void {
 		//从三角面列表中删除三角面
-		this._tris.splice(this._tris.indexOf(tri),1);
+		this._tris.splice(this._tris.indexOf(tri), 1);
 		//销毁三角面--删除点所在的三角面列表中此三角面
 		tri.del();
+	}
+
+	/**通过voronoi算法算出多边形*/
+	public voronoi(): void {
+		this._polgons = new Array<Pol2D>();
+		let key: any;
+		let p2d: Point2D;
+		for (key in this._points) {
+			p2d = this._points[key];
+			let pol: Pol2D = this.createPolygon(p2d);
+			pol.cutself(this._maxW, this._maxH);
+			if (pol.vertex.length >= 3) {
+				this._polgons.push(pol);
+			}
+			else {
+				LogTrace.log("数据异常：四边形的边的数量异常");
+			}
+		}
+	}
+	/**
+	 * 泰森多边形也称为Voronoi图
+	 * 因为三角形的顶点，就是多边形的中心点
+	 * 通过这个顶点可以找到拥有这个顶点的三角形
+	 * 按照相邻连接的方法将这些三角形的外接圆圆心点连接起来，就是一个多边形
+	 */
+	private createPolygon(p2d: Point2D): Pol2D {
+		let tris: Array<Tri2D> = p2d.tris;
+		let startTri: Tri2D = tris[0];
+		let pcList: Array<Tri2D> = [startTri];
+		//有一种特殊情况，那就是如果三角形的循环无法有效的回归，则说明这个多边形需要进行补充。
+		//在无法衔接的这两个三角形里，非共同边但拥有p2d端点的那个线段，就是需要进行补充的线段。而当前的这个三角形的外接圆心到这条边中线的延长线，就是边界焦点。
+		//将焦点连接中心点，形成一个新的三角形。
+		//之后在反向查询一次，如果无法连同，则再次执行上两步
+		//两边都执行一次之后，这个三角形百分百的与外边框相连接。这个时候判断新生成大的两个三角形的焦点是否在同一条边框上，如果在，用他们两个和中心点构成新的三角形。
+		//如果不在，以他们两个点外加边框边缘，形成2个是三角形加入数组。再执行通路检测
+		let xlTri: Tri2D = this.findAdjacent(startTri, pcList, tris);
+		let lastTri: Tri2D = xlTri;
+		let tCount: number = 2;
+		while (xlTri != null) {
+			pcList.push(xlTri);
+			lastTri = xlTri;
+			xlTri = this.findAdjacent(xlTri, pcList, tris);
+			tCount++;
+		}
+		if (!(TriangleUtil.isAdjacent(lastTri, startTri)) && tCount >= 3) {
+			LogTrace.log("存在无法构造的多边形");
+		}
+		let points: Array<Point2D> = new Array<Point2D>();
+		for (let i: number = 0; i < pcList.length; i++) {
+			points.push((pcList[i] as Tri2D).center);
+		}
+		let polygon: Pol2D = new Pol2D(points);
+		polygon.centerPoint = p2d;
+		return polygon;
+	}
+
+	/**
+	 * 寻找一个相邻的三角形
+	 * @param fromTri 查询的对象
+	 * @param exclude 排除的三角对象--已经检测过省略计算
+	 * @param all 查询的范围
+	 * @return
+	 */
+	private findAdjacent(fromTri: Tri2D, exclude: Array<Tri2D>, all: Array<Tri2D>): Tri2D {
+		let target: Tri2D = null;
+		let key: any;
+		let tri: Tri2D;
+		for (key in all) {
+			tri = all[key];
+			if (exclude.indexOf(tri) >= 0) {
+				continue;
+			}
+			if (TriangleUtil.isAdjacent(fromTri, tri)) {
+				target = tri;
+				break;
+			}
+		}
+		return target;
 	}
 }

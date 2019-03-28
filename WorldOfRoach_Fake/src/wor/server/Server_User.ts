@@ -37,7 +37,14 @@ class Server_User {
 	 */
 	private userCreate(msg: string): string {
 		let posJson:Object = JSON.parse(msg);
-		let tempUser:UserConfig = LocalData.getObjectByKv("UserConfig","{id:1}");
+		let tempUser:UserConfig = LocalData.getObjectByKv("UserConfig",{id:1});
+		let obj:Object = new Object();
+		ObjectUtil.copyTo(tempUser,obj);
+		obj["posX"] = posJson["posX"];
+		obj["posY"] = posJson["posY"];
+		localStorage.setItem(Server_User.T_USER_DATA,JSON.stringify(obj));
+		GameData.historyData.has =1;
+		localStorage.setItem(Server_User.T_USER_HISTORY,JSON.stringify(GameData.historyData));
 		return null;
 	}
 }

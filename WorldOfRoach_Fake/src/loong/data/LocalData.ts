@@ -6,16 +6,18 @@ class LocalData {
 
 
 	public static loadLocalData(file: string): void {
-		let jsonName = egret.getDefinitionByName(file);
 		// let jsonName = file.substr(0,file.length - 2);
-		let json = jsonName.file;
-		let values: Array<Object> = RES.getRes(json + "_json");
+		// let values: Array<Object> = RES.getRes(json + "_json");
+		let dataClass = egret.getDefinitionByName(file);
+		let jsonName = dataClass.file;
+		let values: Array<Object> = RES.getRes(jsonName);
 		LocalData.createTable(file, values);
 	}
 
 	private static createTable(file: string, result: Array<Object>): LocalDataTable {
 		let table: LocalDataTable = new LocalDataTable();
 		table.initTable(file, result);
+		LocalData._dataMap.set(file,table);
 		return table;
 	}
 

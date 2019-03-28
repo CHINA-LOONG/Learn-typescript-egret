@@ -24,19 +24,22 @@ class GameManager {
 
 	private buildEnter():void{
 		WorldMakerManager.instance.createWorld();
-		ProxyMgr.instance.request(ModuleType.USER,ProxyType.USER_CREATE, `{\"posX\":${GameData.playerData.posX},\"posY\":${GameData.playerData.posY}`);
+		ProxyMgr.instance.request(ModuleType.USER,ProxyType.USER_CREATE, `{\"posX\":${GameData.playerData.posX},\"posY\":${GameData.playerData.posY}}`);
 	}
 
 	private createEnter():void{
 
 	}
 
-
 	/**
 	 * 改变主加载界面的文本
 	 */
 	public setMainLoadingInfo(infoStr:string):void{
 		WindowsMgr.instance.updateWindow(UpdateType.MAIN_LOADING_SET,[WindowType.MAIN_LOADING],infoStr);
+	}
+
+	public setMainLoadinglloy(lloy:LloydUtil):void{
+		WindowsMgr.instance.updateWindow(UpdateType.MAIN_LOADING_SET,[WindowType.MAIN_LOADING],lloy);
 	}
 
 }

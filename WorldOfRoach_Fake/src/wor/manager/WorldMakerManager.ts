@@ -24,6 +24,8 @@ class WorldMakerManager {
 		let points: Array<number> = RandomUtil.getRandomPoints(this._sizeW, this._sizeH, 10, 1000);
 		let lloy: LloydUtil = new LloydUtil(points, this._sizeH, this._sizeW);
 
+		lloy.delaunay();
+		GameManager.instance.setMainLoadinglloy(lloy);
 		
 
 
