@@ -39,7 +39,7 @@ class GameManager {
 	}
 
 	public setMainLoadinglloy(lloy:LloydUtil):void{
-		WindowsMgr.instance.updateWindow(UpdateType.MAIN_LOADING_SET,[WindowType.MAIN_LOADING],lloy);
+		WindowsMgr.instance.updateWindow(UpdateType.MAIN_LOADING_MAP,[WindowType.MAIN_LOADING],lloy);
 	}
 
 }

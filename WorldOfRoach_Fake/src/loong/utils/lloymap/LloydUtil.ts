@@ -17,6 +17,13 @@ class LloydUtil {
 	/**图形高 */
 	private _maxH: number;
 
+	get tris():Array<Tri2D>{
+		return this._tris;
+	}
+	get polgons():Array<Pol2D>{
+		return this._polgons;
+	}
+
 	public constructor(points: Array<number>, maxW: number, maxH: number) {
 		this._points = new Array<Point2D>();
 		let index: number = 0;
@@ -40,6 +47,8 @@ class LloydUtil {
 		//辅助三角形干啥的一定要搞明白  难道只是想要一个覆盖地图的三角形
 		this._assistPoints = [new Point2D(this._maxW / 2, -10000), new Point2D(this._maxW + 10000, this._maxH), new Point2D(-10000, this._maxH)];
 		this.addTri([this._assistPoints[0], this._assistPoints[1], this._assistPoints[2]]);
+
+
 		let index: number = 0;
 		let p2d: Point2D;
 		//三角形中插入点，并重构三角形
@@ -48,6 +57,7 @@ class LloydUtil {
 			this.insertPoint(p2d);
 			index++;
 		}
+		
 	}
 
 	/**像图形中插入一个点*/
@@ -155,6 +165,7 @@ class LloydUtil {
 				LogTrace.log("数据异常：四边形的边的数量异常");
 			}
 		}
+		GameManager.instance.setMainLoadinglloy(this);
 	}
 	/**
 	 * 泰森多边形也称为Voronoi图
@@ -167,7 +178,7 @@ class LloydUtil {
 		let startTri: Tri2D = tris[0];
 		let pcList: Array<Tri2D> = [startTri];
 		//有一种特殊情况，那就是如果三角形的循环无法有效的回归，则说明这个多边形需要进行补充。
-		//在无法衔接的这两个三角形里，非共同边但拥有p2d端点的那个线段，就是需要进行补充的线段。而当前的这个三角形的外接圆心到这条边中线的延长线，就是边界焦点。
+		//在无法衔接的这两个三角形里，非共同边但拥有p2d端点的那个线段，就是需要进行补充的线段。而当前的这个三角形的外接圆心到这条边中线的延长线（交点），就是边界焦点。
 		//将焦点连接中心点，形成一个新的三角形。
 		//之后在反向查询一次，如果无法连同，则再次执行上两步
 		//两边都执行一次之后，这个三角形百分百的与外边框相连接。这个时候判断新生成大的两个三角形的焦点是否在同一条边框上，如果在，用他们两个和中心点构成新的三角形。

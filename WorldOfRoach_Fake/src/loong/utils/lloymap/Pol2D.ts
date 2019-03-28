@@ -17,35 +17,35 @@ class Pol2D {
 			point = this.vertex[key];
 			//检测顶点是否在地图外侧
 			if (this.isOutside(w, h, point)) {
-				if (this.isOutside(w, h, this.getPrePoint(point))&&this.isOutside(w,h,this.getNextPoint(point)))
+				if (this.isOutside(w, h, this.getPrePoint(point)) && this.isOutside(w, h, this.getNextPoint(point)))
 					delList.push(point);
 			}
 		}
-		while(delList.length>0){
+		while (delList.length > 0) {
 			point = delList.pop();
-			this.vertex.splice(this.vertex.indexOf(point),1);
+			this.vertex.splice(this.vertex.indexOf(point), 1);
 		}
-		let outsideCount:number = 0;
-		for(key in this.vertex){
+		let outsideCount: number = 0;
+		for (key in this.vertex) {
 			point = this.vertex[key];
-			if(this.isOutside(w,h,point)){
+			if (this.isOutside(w, h, point)) {
 				delList.push(point);
 				outsideCount++;
 			}
 		}
-		if(outsideCount==0){
+		if (outsideCount == 0) {
 			return;
 		}
-		this.isos = outsideCount>0;
-		if(outsideCount>2)
-		{
+		this.isos = outsideCount > 0;
+		if (outsideCount > 2) {
 			LogTrace.log("数据异常：存在超过2个点在裁切以后外框以外的多边形");
 		}
-		let p1:Point2D;
-		let p2:Point2D;
-		let pIndex:number;
-		let nIndex:number;
-		if(outsideCount == 1){
+		let p1: Point2D;
+		let p2: Point2D;
+		let pIndex: number;
+		let nIndex: number;
+		if (outsideCount == 1) {
+			p1 = this.getIntersect(w,h,delList[0],this.getPrePoint(delList[0]));
 			
 		}
 	}
@@ -102,5 +102,43 @@ class Pol2D {
 		if (returnPoint == target)
 			LogTrace.log("数据异常：这个四边形只有两个点");
 		return returnPoint;
+	}
+	/**
+	 * 获取一个和外边框相交的点
+	 * @param w
+	 * @param h
+	 * @param fromP 在框外的点
+	 * @param toP 在框内的点
+	 * @return
+	 */
+	private getIntersect(w: number, h: number, fromP: Point2D, toP: Point2D): Point2D {
+		let dis1: number;
+		let dis2: number;
+		if ((fromP.x < 0 || fromP.x > w) && (fromP.y < 0 || fromP.y > h)) {
+			let xbz: number;
+			let ybz: number;
+			if (fromP.y < 0) {
+				ybz = (toP.y - fromP.y) / toP.y;
+				if (fromP.x < 0)
+					xbz = (toP.x - fromP.x) / toP.x;
+				else
+					xbz = (fromP.x - toP.x) / (w - toP.x);
+			}
+			else {
+				ybz = (fromP.y - toP.y) / (h - toP.y);
+				if (fromP.x < 0)
+					xbz = (toP.x - fromP.x) / toP.x;
+				else
+					xbz = (fromP.x - toP.x) / (w - toP.x);
+			}
+			if (xbz > ybz) {
+
+			}
+			else {
+
+			}
+		}
+
+		return null;
 	}
 }

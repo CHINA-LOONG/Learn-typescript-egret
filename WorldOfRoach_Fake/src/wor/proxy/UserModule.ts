@@ -2,6 +2,8 @@ class UserModule extends ModuleBase {
 	public constructor(id: number) {
 		super(id);
 		this.registHandler(ProxyType.USER_GETHISTORY,this.userHistoryHandler);
+		// this.registHandler(ProxyType.USER_ENTERGAME,this.userEnterGame);
+		this.registHandler(ProxyType.USER_CREATE,this.createUser);
 	}
 
 	/**

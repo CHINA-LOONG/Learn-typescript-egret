@@ -21,12 +21,11 @@ class WorldMakerManager {
 	public createWorld(): void {
 		GameManager.instance.setMainLoadingInfo(LanguageData.instance.getLang(10001));
 		//每个x一个元素，每个y一个元素
-		let points: Array<number> = RandomUtil.getRandomPoints(this._sizeW, this._sizeH, 10, 1000);
+		let points: Array<number> = RandomUtil.getRandomPoints(this._sizeW, this._sizeH, 1, 10);
 		let lloy: LloydUtil = new LloydUtil(points, this._sizeH, this._sizeW);
 
 		lloy.delaunay();
-		GameManager.instance.setMainLoadinglloy(lloy);
-		
+		lloy.voronoi();
 
 
 		//------------下面是业务部分-----------
