@@ -11,4 +11,7 @@ class UpdateType {
     public static MAP_OPT_CHANGE:number = 20002;
     //改变当前主等待界面的信息
     public static MAIN_LOADING_SET:number = 9990001;
+
+    /**绘制地图过程 */
+    public static MAIN_LOADING_MAP:number = 9990002;
 }

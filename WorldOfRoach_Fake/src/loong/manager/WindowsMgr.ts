@@ -117,4 +117,15 @@ class WindowsMgr {
 	{
 
 	}
+
+		/**
+	 * 快速获取游戏舞台
+	 */
+	public gameStage():egret.Stage
+	{
+		if(this._baseUI!=null)
+			return this._baseUI.stage;
+		else
+			return null;
+	}
 }

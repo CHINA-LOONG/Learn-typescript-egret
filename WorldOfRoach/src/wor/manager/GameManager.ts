@@ -94,4 +94,8 @@ class GameManager {
 	public setMainLoadingInfo(infoStr:string):void{
 		WinsManager.getIns().updateWin(UpdateType.MAIN_LOADING_SET,[WorWindowType.MAIN_LOADING],infoStr);
 	}
+
+	public setMainLoadinglloy(lloy:LloydUtil):void{
+		WinsManager.getIns().updateWin(UpdateType.MAIN_LOADING_MAP,[WorWindowType.MAIN_LOADING],lloy);
+	}
 }

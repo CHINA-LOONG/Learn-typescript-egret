@@ -10,14 +10,14 @@ var egret;
 (function (egret) {
     var experimental;
     (function (experimental) {
-        /**
-         * @private
-         */
         experimental.debug = false;
         experimental.ExifTags = {
+            // version tags
             0x9000: "ExifVersion",
             0xA000: "FlashpixVersion",
+            // colorspace tags
             0xA001: "ColorSpace",
+            // image configuration
             0xA002: "PixelXDimension",
             0xA003: "PixelYDimension",
             0x9101: "ComponentsConfiguration",
@@ -391,7 +391,6 @@ var egret;
                     if (experimental.debug)
                         console.log("Found 0xFFE1 marker");
                     return readEXIFData(dataView, offset + 4);
-                    // offset += 2 + file.getShortAt(offset+2, true);
                 }
                 else {
                     offset += 2 + dataView.getUint16(offset + 2);
@@ -495,7 +494,7 @@ var egret;
             var type = file.getUint16(entryOffset + 2, !bigEnd), numValues = file.getUint32(entryOffset + 4, !bigEnd), valueOffset = file.getUint32(entryOffset + 8, !bigEnd) + tiffStart, offset, vals, val, n, numerator, denominator;
             switch (type) {
                 case 1: // byte, 8-bit unsigned int
-                case 7:// undefined, 8-bit byte, value depending on field
+                case 7:
                     if (numValues == 1) {
                         return file.getUint8(entryOffset + 8, !bigEnd);
                     }
@@ -507,10 +506,10 @@ var egret;
                         }
                         return vals;
                     }
-                case 2:// ascii, 8-bit byte
+                case 2:
                     offset = numValues > 4 ? valueOffset : (entryOffset + 8);
                     return getStringFromDB(file, offset, numValues - 1);
-                case 3:// short, 16 bit int
+                case 3:
                     if (numValues == 1) {
                         return file.getUint16(entryOffset + 8, !bigEnd);
                     }
@@ -522,7 +521,7 @@ var egret;
                         }
                         return vals;
                     }
-                case 4:// long, 32 bit int
+                case 4:
                     if (numValues == 1) {
                         return file.getUint32(entryOffset + 8, !bigEnd);
                     }
@@ -533,7 +532,7 @@ var egret;
                         }
                         return vals;
                     }
-                case 5:// rational = two long values, first is numerator, second is denominator
+                case 5:
                     if (numValues == 1) {
                         numerator = file.getUint32(valueOffset, !bigEnd);
                         denominator = file.getUint32(valueOffset + 4, !bigEnd);
@@ -553,7 +552,7 @@ var egret;
                         }
                         return vals;
                     }
-                case 9:// slong, 32 bit signed int
+                case 9:
                     if (numValues == 1) {
                         return file.getInt32(entryOffset + 8, !bigEnd);
                     }
@@ -564,7 +563,7 @@ var egret;
                         }
                         return vals;
                     }
-                case 10:// signed rational, two slongs, first is numerator, second is denominator
+                case 10:
                     if (numValues == 1) {
                         return file.getInt32(valueOffset, !bigEnd) / file.getInt32(valueOffset + 4, !bigEnd);
                     }
@@ -749,18 +748,6 @@ var egret;
 (function (egret) {
     var experimental;
     (function (experimental) {
-        /**
-        * @language en_US
-        * The pickPhoto method provides ability for picking a photo.
-        * @version Egret 4.0
-        * @platform Web
-        */
-        /**
-         * @language zh_CN
-         * pickPhoto API提供用于选取照片的方法。
-         * @version Egret 4.0
-         * @platform Web
-         */
         function pickPhoto() {
             return new Promise(function (resolve, reject) {
                 var fileInput = document.createElement("input");
@@ -820,10 +807,12 @@ var egret;
                                             ctx.rotate(Math.PI);
                                             break;
                                         case 4:
+                                            // vertical flip
                                             ctx.translate(0, canvas.height);
                                             ctx.scale(1, -1);
                                             break;
                                         case 5:
+                                            // vertical flip + 90 rotate right
                                             ctx.rotate(0.5 * Math.PI);
                                             ctx.scale(1, -1);
                                             break;

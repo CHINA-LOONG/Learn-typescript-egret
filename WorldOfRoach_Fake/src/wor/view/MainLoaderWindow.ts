@@ -39,17 +39,45 @@ class MainLoaderWindow extends GameWindow {
 			case UpdateType.MAIN_LOADING_MAP:
 				this.updateDrawMap(updateObject as LloydUtil);
 				break;
+			case UpdateType.MAIN_LOADING_COLOR:
+				this.updateColor(updateObject);
+				break;
 		}
 	}
 
+
+	private _drawColor: egret.Shape;
+	private updateColor(data: any): void {
+		if (!this._drawColor) {
+			this._drawColor = new egret.Shape();
+		}
+		this._drawColor.graphics.clear();
+		let bg = this._drawColor;
+
+		for(let i = 0;i<500;i++){
+			for(let j = 0;j<500;j++){
+
+			}
+		}
+		// bg.graphics.draw
+
+	}
+
+	private polgonTimes: number = 0;
 	private updateDrawMap(lloy: LloydUtil): void {
 		if (!lloy)
 			return;
-		this.drawBackground();
-		this.drawMap(lloy);
 
-		this.drawTriangle(lloy);
-		this.drawPolgon(lloy);
+		if (this.polgonTimes <= 0) {
+			this.drawTriangle(lloy);
+			this.drawBackground();
+			this.drawMap(lloy);
+			this.drawPolgon(lloy);
+			this.polgonTimes++;
+		}
+		else {
+			// this.drawPolgon2(lloy);
+		}
 	}
 
 	private _drawBG: egret.Shape;
@@ -97,8 +125,13 @@ class MainLoaderWindow extends GameWindow {
 
 		let drawList: Array<Edge2D> = new Array<Edge2D>();
 		let edge: Edge2D;
-		for (key in lloy.tris) {
-			tri = lloy.tris[key];
+		// let temp = 0;
+		for (key in lloy.Triangles) {
+			tri = lloy.Triangles[key];
+			// if(temp == 0){
+			// 	++temp;
+			// 	continue;
+			// }
 			for (let i = 0; i < tri.edges.length; i++) {
 				edge = tri.edges[i];
 				if (drawList.indexOf(edge) < 0) {
@@ -124,9 +157,9 @@ class MainLoaderWindow extends GameWindow {
 
 		let key: any;
 		let pol: Pol2D;
-		line.graphics.lineStyle(1, 0x00ff00);
-		for (key in lloy.polgons) {
-			pol = lloy.polgons[key];
+		line.graphics.lineStyle(1, 0x888888);
+		for (key in lloy.Polgons) {
+			pol = lloy.Polgons[key];
 			let start = pol.vertex[0];
 			let p1 = this.rePoint(start);
 			line.graphics.moveTo(p1.x, p1.y);
@@ -146,12 +179,44 @@ class MainLoaderWindow extends GameWindow {
 		this.addChild(line);
 	}
 
+	private _drawPol2: egret.Shape;
+	private drawPolgon2(lloy: LloydUtil) {
+		if (!this._drawPol2) {
+			this._drawPol2 = new egret.Shape();
+		}
+		this._drawPol2.graphics.clear();
+		let line = this._drawPol2;
 
+		let key: any;
+		let pol: Pol2D;
+		line.graphics.lineStyle(1, 0xffffff);
+		for (key in lloy.Polgons) {
+			pol = lloy.Polgons[key];
+			let start = pol.vertex[0];
+			let p1 = this.rePoint(start);
+			line.graphics.moveTo(p1.x, p1.y);
+			let temp = pol.getNextPoint(start);
+			while (start != temp) {
+				let p2 = this.rePoint(temp);
+				line.graphics.lineTo(p2.x, p2.y);
+				temp = pol.getNextPoint(temp);
+			}
+			line.graphics.lineTo(p1.x, p1.y);
+
+			// for (let i = 1; i < pol.vertex.length; i++) {
+			// 	let p2 = this.rePoint(pol.vertex[i]);
+			// 	line.graphics.lineTo(p2.x, p2.y);
+			// }
+		}
+		this.addChild(line);
+	}
+
+	private scale: number = 1.5;
 	private rePoint(p: Point2D): egret.Point {
-		let returnP: egret.Point = new egret.Point(p.x / 20 + this.stage.stageWidth / 2, p.y / 20 + this.stage.stageHeight / 2);
+		let returnP: egret.Point = new egret.Point(p.x / this.scale + this.scale * 40, p.y / this.scale + this.scale * 40);
 		return returnP;
 	}
 	private reDistance(d: number): number {
-		return d / 20;
+		return d / this.scale;
 	}
 }

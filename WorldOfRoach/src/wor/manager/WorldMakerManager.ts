@@ -24,11 +24,15 @@ class WorldMakerManager implements IRender{
 		var lloy:LloydUtil = new LloydUtil(points,this._sizeW,this._sizeH);
 		lloy.delaunay();
 		lloy.voronoi();
+		// GameManager.getIns().setMainLoadinglloy(lloy);
 		lloy.optimization();
 		lloy.optimization();
 		lloy.optimization();
 		lloy.optimization();
 		lloy.optimization();
+
+		// GameManager.getIns().setMainLoadinglloy(lloy);
+		
 		var nosie:any = PerlinNoiseUtil.noise2D(500,500);
 		GameData.mapData.initData(lloy.getPolgons(),this._sizeW,this._sizeH);//初始化地图数据
 		GameData.mapData.adjustCoast(0.58,nosie);//优化海岸线
@@ -51,7 +55,7 @@ class WorldMakerManager implements IRender{
 		localStorage.setItem(Server_Map.T_MAP_BASE,baseMap);//将当前地图数据写入到本地
 		//初始化植被数据
 		GameData.plantData.resetConfig();
-		this.drawTr();
+		this.drawTr(true);
 		//创建迷雾
 		FogForGrid.getIns().init(this._sizeW,this._sizeH);
 	}

@@ -1,13 +1,28 @@
 class Pol2D {
-
-	public centerPoint: Point2D;
+	/**多边形的中心->向重心移动可以优化 */
+	public centerPoint: Point2D;	//在创建多边形时使用创建三角形的点赋值了，修改这个点会修改三角形的点
+	/**多边形的顶点 */
 	public vertex: Array<Point2D>;
-	public isos: boolean = false;
+	/**是否最外圈的多边形 */
+	public isos: boolean = false;	//通过是否有边框外部的点来判断
 
 	public constructor(points: Array<Point2D>) {
 		this.vertex = points;
 	}
 
+	/**
+	 * 向重心点移动
+	 */
+	public moveToFocus(p: egret.Point): void {
+		this.centerPoint.x = p.x;
+		this.centerPoint.y = p.y;
+	}
+
+	/**
+	 * 根据容器外框大小进行自裁切
+	 * @param w
+	 * @param h 
+	 */
 	public cutself(w: number, h: number): void {
 		let key: any;
 		let point: Point2D;
@@ -85,23 +100,53 @@ class Pol2D {
 				nIndex = this.vertex.indexOf(delList[1]);
 				this.vertex[nIndex] = p2;
 			}
-			
-			let list:Array<Object> = [];
-			let key:any;
-			for(key in list){
+
+			let list: Array<Object> = [];
+			let key: any;
+			for (key in list) {
 				let ele = list[key];
 			}
-			for(key in list){
-				var ele=list[key];
+			for (key in list) {
+				var ele = list[key];
 			}
 
 			//------------------检查是否同边-------------------
-			if(p1.x == p2.x||p1.y == p2.y){
+			if (p1.x == p2.x || p1.y == p2.y) {
 				return;
 			}
-			let px:number = 0;
-			let py:
+			//------------------不同边需要插入角点--------------
+			let px: number = 0;
+			let py: number = 0;
+
+			//不同边计算角点x
+			if (p1.x == 0 || p1.x == w)
+				px = p1.x;
+			else if (p2.x == 0 || p2.x == w)
+				px = p2.x;
+			else
+				LogTrace.log("数据异常：裁切以后边不在边框上");//点很少是会出现问题，点在边框两边
+
+			//不同边计算角点y
+			if (p1.y == 0 || p1.y == h)
+				py = p1.y;
+			else if (p2.y == 0 || p2.y == h)
+				py = p2.y;
+			else
+				LogTrace.log("数据异常：裁切以后边不在边框上");//点很少是会出现问题，点在边框两边
+
+			//根据两个边界点的前后计算插入角点的位置
+			if (this.getPrePoint(p1) == p2)		//p2在前
+				this.vertex.splice(this.vertex.indexOf(p2) + 1, 0, new Point2D(px, py));
+			else if (this.getPrePoint(p2) == p1)
+				this.vertex.splice(this.vertex.indexOf(p1) + 1, 0, new Point2D(px, py));
+			else
+				LogTrace.log("数据异常：插入点有问题");
 		}
+		//2.如果有两个点，则分别向他们的真实点移动。
+		//3.经过上面的处理之后，都会有2个点与边框贴近，我们称为虚拟点。
+		//4.如果虚拟点在同一个边上，不做处理。如果他们不在同一条边上，则计算他们所在边的焦点，以此点为终点，新生成一个虚拟点。插入在他们之间。
+		//5.经过上面的处理之后。得到的就是一个大小可控的范围。再做重心移动操作就不会出现异常出界的问题。
+		//注意：上面所有移动的点都是虚拟替换点，需要删除原有的点。经过这个处理之后，所有的中心点都不会偏移出界。那么三角形的顶点自然也就不会出界。生成的多边形会更平滑
 	}
 
 	/**
@@ -114,7 +159,25 @@ class Pol2D {
 	private isOutside(w: number, h: number, target: Point2D): boolean {
 		return target.x < 0 || target.y < 0 || target.x > w || target.y > h;
 	}
-
+	
+	/**
+	 * 根据ID获取一个Point
+	 * @param pid
+	 * @return
+	 */
+	public getPointByID(pid: number): Point2D {
+		var target: Point2D;
+		var key: any;
+		var pp: Point2D;
+		for (key in this.vertex) {
+			pp = this.vertex[key];
+			if (pp.id == pid) {
+				target = pp;
+				break;
+			}
+		}
+		return target;
+	}
 
 	/**
 	 * 获取他的上一个

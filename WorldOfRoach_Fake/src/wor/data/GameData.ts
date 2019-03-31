@@ -8,4 +8,7 @@ class GameData {
 	public static playerData:PlayerData = new PlayerData();
 	/**地图数据 */
 	public static mapData:LloydMapData = new LloydMapData();
+	
+	/**植被数据 */
+	public static plantData:PlantData = new PlantData();
 }

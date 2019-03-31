@@ -11,4 +11,6 @@ class UpdateType {
     
     /**绘制地图过程 */
     public static MAIN_LOADING_MAP:number = 9990002;
+    /**绘制地图色值 */
+    public static MAIN_LOADING_COLOR:number = 9990003;
 }

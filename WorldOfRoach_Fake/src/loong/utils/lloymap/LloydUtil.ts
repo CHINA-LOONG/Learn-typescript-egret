@@ -17,10 +17,10 @@ class LloydUtil {
 	/**图形高 */
 	private _maxH: number;
 
-	get tris():Array<Tri2D>{
+	get Triangles(): Array<Tri2D> {
 		return this._tris;
 	}
-	get polgons():Array<Pol2D>{
+	get Polgons(): Array<Pol2D> {
 		return this._polgons;
 	}
 
@@ -45,10 +45,8 @@ class LloydUtil {
 		this._tris = new Array<Tri2D>();
 
 		//辅助三角形干啥的一定要搞明白  难道只是想要一个覆盖地图的三角形
-		this._assistPoints = [new Point2D(this._maxW / 2, -10000), new Point2D(this._maxW + 10000, this._maxH), new Point2D(-10000, this._maxH)];
+		this._assistPoints = [new Point2D(this._maxW / 2, -1000), new Point2D(this._maxW + 1000, this._maxH), new Point2D(-1000, this._maxH)];
 		this.addTri([this._assistPoints[0], this._assistPoints[1], this._assistPoints[2]]);
-
-
 		let index: number = 0;
 		let p2d: Point2D;
 		//三角形中插入点，并重构三角形
@@ -57,7 +55,7 @@ class LloydUtil {
 			this.insertPoint(p2d);
 			index++;
 		}
-		
+
 	}
 
 	/**像图形中插入一个点*/
@@ -149,6 +147,63 @@ class LloydUtil {
 		tri.del();
 	}
 
+	/**
+	 * 进行优化
+	 * 1.循环所有的四边形，移动他的重心
+	 * 2.刷新所有三角形数据
+	 * 3.重新生成四边形数据
+	 **/
+	public optimization(): void {
+		let key: any;
+		let pol: Pol2D;
+		//计算所有多边形的重心
+		// this._points = [];
+		for (key in this._polgons) {
+			this._polgons[key].moveToFocus(LloydUtil.getFoucsPoint(this.Polgons[key]));
+			// this._points.push(this._polgons[key].centerPoint);
+		}
+		this._tris = [];
+		let p2d: Point2D;
+		for (key in this._points) {
+			p2d = this._points[key];
+			p2d.tris = [];
+		}
+		this.delaunay();	//分割三角形
+		this.voronoi();		//创建多边形
+	}
+
+	/**
+	 * 找出多边形的重心，使用方法二任意多边形
+	 * x=(x1*s1+x2*s2+...)/(s1+s2+...)
+	 * https://blog.csdn.net/mnlghttr/article/details/17056831
+	 *
+	 * 获取多边形的重心点 //该算法分凸多边形和任意多边形
+	 * n边多边形可以分成n-2个三角形，将这些三角形看做质点（质点的位置是三角形的重心x1,x2,..，质量是面积s1,s2,..），那么多边形就由这些质点组成，质点坐标以其质量为权的加权算术平均数即是多边形重心坐标x。
+	 * x=(x1*s1+x2*s2+...)/(s1+s2+...)
+	 * s=s1+s2+...
+	 */
+	public static getFoucsPoint(pol: Pol2D): egret.Point {
+		let tS: number = 0;
+		let S: number = 0;
+		let sx: number = 0;
+		let sy: number = 0;
+		for (let i: number = 0; i < pol.vertex.length; i++) {
+			let t0: number = i;
+			let t1: number = i + 1;
+			if (t1 == pol.vertex.length)
+				t1 = 0;
+			tS = this.cross(pol.vertex[t0], pol.vertex[t1]) / 2.;	//三角形面积
+			S += tS;	//面积之和
+			sx += tS * (pol.vertex[t0].x + pol.vertex[t1].x) / 3;	//面积*三点平均值（此处省略原点0）
+			sy += tS * (pol.vertex[t0].y + pol.vertex[t1].y) / 3;	//面积*三点平均值（此处省略原点0）
+		}
+		return new egret.Point(sx / S, sy / S);
+	}
+	//向量叉乘计算
+	private static cross(p1: egret.Point, p2: egret.Point): number {
+		return p1.x * p2.y - p1.y * p2.x;
+	}
+
 	/**通过voronoi算法算出多边形*/
 	public voronoi(): void {
 		this._polgons = new Array<Pol2D>();
@@ -165,7 +220,6 @@ class LloydUtil {
 				LogTrace.log("数据异常：四边形的边的数量异常");
 			}
 		}
-		GameManager.instance.setMainLoadinglloy(this);
 	}
 	/**
 	 * 泰森多边形也称为Voronoi图

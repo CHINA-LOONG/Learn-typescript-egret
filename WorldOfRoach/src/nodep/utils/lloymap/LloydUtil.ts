@@ -12,6 +12,12 @@ class LloydUtil {
 	private _maxW: number;
 	private _maxH: number;
 
+	get tris(): Array<Tri2D> {
+		return this._tris;
+	}
+	get polgons(): Array<Pol2D> {
+		return this._polgons;
+	}
 	/**
 	 * 构造一个算法结构
 	 * @param points
