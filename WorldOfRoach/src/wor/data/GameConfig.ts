@@ -27,7 +27,7 @@ class GameConfig {
 	public static map_cfx:number;//世界缩放比例
 	public static map_cfy:number;//世界缩放比例
 	/**是否显示迷雾 */
-	public static showFog:boolean = false;
+	public static showFog:boolean = true;
 	/**是否显示河流 */
 	public static showRiver:boolean = true;
 

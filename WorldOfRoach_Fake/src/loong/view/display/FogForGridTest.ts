@@ -1,9 +1,9 @@
 /**
- * 游戏可记录的迷雾
- */
-class FogForGrid extends egret.DisplayObjectContainer {
+* 游戏可记录的迷雾
+*/
+class FogForGridTest extends egret.DisplayObjectContainer {
 
-	private static _ins: FogForGrid;
+	private static _ins: FogForGridTest;
 	private _bitmap: egret.Bitmap;
 	private _bgSh: egret.Shape;
 	private _fogLayer: egret.DisplayObjectContainer;
@@ -19,10 +19,10 @@ class FogForGrid extends egret.DisplayObjectContainer {
 		super();
 	}
 
-	public static getIns(): FogForGrid {
-		if (FogForGrid._ins == null)
-			FogForGrid._ins = new FogForGrid();
-		return FogForGrid._ins;
+	public static getIns(): FogForGridTest {
+		if (FogForGridTest._ins == null)
+			FogForGridTest._ins = new FogForGridTest();
+		return FogForGridTest._ins;
 	}
 
 	private initBase(w: number, h: number): void {
@@ -33,7 +33,7 @@ class FogForGrid extends egret.DisplayObjectContainer {
 		this.addChild(this._bitmap);
 		this._bgSh = new egret.Shape();
 		this._bgSh.graphics.beginFill(0x000000, 1.0);
-		this._bgSh.graphics.drawRect(0, 0, w, h);     //  创建黑色遮罩覆盖战场
+		this._bgSh.graphics.drawRect(0, 0, w, h);     //  创建黑色遮罩覆盖战场
 		this._bgSh.graphics.endFill();
 		this._con = new egret.DisplayObjectContainer();
 		this._con.addChild(this._bgSh);
@@ -44,15 +44,15 @@ class FogForGrid extends egret.DisplayObjectContainer {
 		this._fogLayer.blendMode = egret.BlendMode.ERASE;
 	}
 
-	//加载迷雾
-	public rebuild(w: number, h: number): void {
-		this.initBase(w, h);
-		//加载之前的迷雾图并添加到fogLayer中
-		var base64Str: string = localStorage.getItem(Server_Map.T_MAP_MINI);
-		var btd: egret.BitmapData = egret.BitmapData.create("base64", base64Str);
-		this._fogLayer.addChild(new egret.Bitmap(btd));
-		this.reDraw();
-	}
+	// //加载迷雾
+	// public rebuild(w: number, h: number): void {
+	// 	this.initBase(w, h);
+	// 	//加载之前的迷雾图并添加到fogLayer中
+	// 	var base64Str: string = localStorage.getItem(Server_Map.T_MAP_MINI);
+	// 	var btd: egret.BitmapData = egret.BitmapData.create("base64", base64Str);
+	// 	this._fogLayer.addChild(new egret.Bitmap(btd));
+	// 	this.reDraw();
+	// }
 
 	//创建迷雾
 	public init(w: number, h: number): void {
@@ -61,15 +61,15 @@ class FogForGrid extends egret.DisplayObjectContainer {
 		this.saveMiniMap();
 	}
 
-	//刷新迷雾的显示
-	public updateFogs(): void {
-		//计算当前绘制的坐标
-		this._fogLayerShape.graphics.beginFill(0x000000, 1);
-		this._fogLayerShape.graphics.drawCircle(this._w * PlayerRole.self.x / GameConfig.WORD_W, this._h * PlayerRole.self.y / GameConfig.WORD_H, this._fw);
-		this._fogLayerShape.graphics.endFill();
-		if (this.autoDraw)
-			this.reDraw();
-	}
+	// //刷新迷雾的显示
+	// public updateFogs(): void {
+	// 	//计算当前绘制的坐标
+	// 	this._fogLayerShape.graphics.beginFill(0x000000, 1);
+	// 	this._fogLayerShape.graphics.drawCircle(this._w * PlayerRole.self.x / GameConfig.WORD_W, this._h * PlayerRole.self.y / GameConfig.WORD_H, this._fw);
+	// 	this._fogLayerShape.graphics.endFill();
+	// 	if (this.autoDraw)
+	// 		this.reDraw();
+	// }
 
 	//自动重新绘制
 	public reDraw(): void {

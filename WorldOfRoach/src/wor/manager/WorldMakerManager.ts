@@ -55,7 +55,7 @@ class WorldMakerManager implements IRender{
 		localStorage.setItem(Server_Map.T_MAP_BASE,baseMap);//将当前地图数据写入到本地
 		//初始化植被数据
 		GameData.plantData.resetConfig();
-		this.drawTr(true);
+		this.drawTr();
 		//创建迷雾
 		FogForGrid.getIns().init(this._sizeW,this._sizeH);
 	}
