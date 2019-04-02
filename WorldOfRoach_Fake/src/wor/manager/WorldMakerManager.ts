@@ -74,7 +74,8 @@ class WorldMakerManager {
 		//初始化植被数据
 		GameData.plantData.resetConfig();
 		this.drawTr(true);
-
+		//创建迷雾
+		FogForGrid.instance.init(this._sizeW,this._sizeH);
 	}
 
 	private drawTr(debug:boolean=false):void{

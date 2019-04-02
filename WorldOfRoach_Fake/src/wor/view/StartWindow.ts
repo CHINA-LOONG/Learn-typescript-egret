@@ -54,11 +54,14 @@ class StartWindow extends GameWindow {
 	private startNewGame(flag: boolean): void {
 		if (flag) {
 			LogTrace.log("startGame for new!");
+			GameManager.instance.isNewGame = true;
 			GameManager.instance.startNewGame();
 		}
 	}
 	private startOldGame(): void {
 		LogTrace.log("startGame for old");
+			GameManager.instance.isNewGame = false;
+			GameManager.instance.startOldGame();
 	}
 
 }

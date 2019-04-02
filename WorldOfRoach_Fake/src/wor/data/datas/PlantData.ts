@@ -12,5 +12,11 @@ class PlantData {
 		localStorage.setItem(Server_Map.T_MAP_PLANTS,JSON.stringify(this._localAreaDic));
 	}
 
+	/**加载存档 */
+	public loadConfig():void{
+		let str:string = localStorage.getItem(Server_Map.T_MAP_PLANTS);
+		this._localAreaDic = JSON.parse(str);
+	}
+	
 
 }
