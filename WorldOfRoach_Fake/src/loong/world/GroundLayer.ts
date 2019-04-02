@@ -20,9 +20,9 @@ class GroundLayer extends egret.DisplayObjectContainer {
 	/**显示半屏的高 */
 	private _hafY: number;
 
-	/**实际地图的偏移X坐标 */
+	/**实际地图最大的偏移X坐标 --定值显示右下角*/
 	private _maxOffsetX: number;
-	/**实际地图的偏移Y坐标 */
+	/**实际地图最大的偏移Y坐标 --定值显示右下角*/
 	private _maxOffsetY: number;
 
 	private _toX: number;

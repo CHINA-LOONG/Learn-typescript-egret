@@ -31,7 +31,7 @@ class ModuleBase {
 	 * 向服务端发送请求,根据主动注册的函数的不同而调用不同的函数来预处理
 	 */
 	public requestToServer(pxy:number,msg:string):void{
-		// msg = this._reqHandlerMap.get(pxy).apply(this,[ModuleBase.TYPE_RQ,msg]);
+		msg = this._reqHandlerMap.get(pxy).apply(this,[ModuleBase.TYPE_RQ,msg]);
 		ServerVirtual.request(this.moduleType,pxy,msg);
 	}
 

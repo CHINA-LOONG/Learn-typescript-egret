@@ -2,7 +2,7 @@ class UserModule extends ModuleBase {
 	public constructor(id: number) {
 		super(id);
 		this.registHandler(ProxyType.USER_GETHISTORY, this.userHistoryHandler);
-		// this.registHandler(ProxyType.USER_ENTERGAME,this.userEnterGame);
+		this.registHandler(ProxyType.USER_ENTERGAME,this.userEnterGame);
 		this.registHandler(ProxyType.USER_CREATE, this.createUser);
 	}
 
@@ -39,7 +39,7 @@ class UserModule extends ModuleBase {
 		else {
 			let obj:Object = JSON.parse(msg);
 			ObjectUtil.copyTo(obj,GameData.playerData);
-			GameManager.instance;
+			GameManager.instance.enterGame();
 		}
 		return null;
 	}
