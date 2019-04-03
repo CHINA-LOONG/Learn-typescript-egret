@@ -17,9 +17,9 @@ class GameConfig {
 	public static ROOM_CHECK_H:number = 1000;
 	/**植被的树 */
 	public static ROOM_GRID_SIZE:number = 300;
-	/**世界的高度 */
+	/**场景的高度 */
 	public static WORD_W:number = 200000;
-	/**世界的宽度 */
+	/**场景的宽度 */
 	public static WORD_H:number = 100000;
 	public static map_cfx:number;//世界缩放比例
 	public static map_cfy:number;//世界缩放比例

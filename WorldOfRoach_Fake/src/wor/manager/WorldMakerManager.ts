@@ -62,7 +62,7 @@ class WorldMakerManager {
 		//增加绿洲
 		GameData.mapData.amendOasis(3);//增加绿洲
 		//------------下面是业务部分-----------
-		//设置玩家的出生坐标
+		//设置玩家的出生坐标--地图中的坐标
 		let bornPoint = GameData.mapData.getBorn();
 		GameData.playerData.posX = bornPoint.x;
 		GameData.playerData.posY = bornPoint.y;

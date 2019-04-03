@@ -58,6 +58,7 @@ class FocusRole extends egret.DisplayObjectContainer implements IFocus, IRender,
 	public setNext(target: ILink): void {
 		this._nextLink = target;
 	}
+	
 	public setAreaKey(ak: string): void {
 		this._ak = ak;
 	}

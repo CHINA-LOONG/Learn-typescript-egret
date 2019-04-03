@@ -5,27 +5,29 @@
  */
 class GroundLayer extends egret.DisplayObjectContainer {
 
-	/**显示地图的最大宽度 */
+	/**显示场景的最大宽度 --通过比例控制*/
 	private _maxW: number;
-	/**显示地图的最大高度 */
+	/**显示场景的最大高度 --通过比例控制*/
 	private _maxH: number;
 
-	/**地图实际宽度 */
+	/**场景宽度 */
 	private _worldW: number;
-	/**地图实际高度 */
+	/**场景高度 */
 	private _worldH: number;
 
-	/**显示半屏的宽 */
+	/**半屏场景的宽 */
 	private _hafX: number;
-	/**显示半屏的高 */
+	/**半屏场景的高 */
 	private _hafY: number;
 
-	/**实际地图最大的偏移X坐标 --定值显示右下角*/
+	/**场景最大的偏移X坐标 --定值显示右下角 --坐标极限*/
 	private _maxOffsetX: number;
-	/**实际地图最大的偏移Y坐标 --定值显示右下角*/
+	/**场景最大的偏移Y坐标 --定值显示右下角 --坐标极限*/
 	private _maxOffsetY: number;
 
+	/**场景显示时的X坐标 */
 	private _toX: number;
+	/**场景显示时的X坐标 */
 	private _toY: number;
 
 	//地表
@@ -53,7 +55,19 @@ class GroundLayer extends egret.DisplayObjectContainer {
 		this.addChild(this._stage);
 	}
 
-	/**初始化当前位置 */
+	/**
+	 * 初始化当前位置 
+	 * @param 在世界中的X坐标
+	 * @param 在世界中的Y坐标
+	 * ┌──────────────────────┐
+	 * │                      │
+	 * │                      │
+	 * │          ┌───────┐   │
+	 * │          │   ·   │   │
+	 * │          └───────┘   │
+	 * └──────────────────────┘
+	 * [场景]相对于[显示]左上角的坐标
+	 */
 	public initPosition(cx: number, cy: number): void {
 		this._toX = -cx + this._hafX;
 		this._toY = -cy + this._hafY;
@@ -65,12 +79,14 @@ class GroundLayer extends egret.DisplayObjectContainer {
 			this._toY = 0;
 		else if (this._toY < this._maxOffsetY)
 			this._toY = this._maxOffsetY;
+		//设置当前的场景坐标
 		this.x = this._toX;
 		this.y = this._toY;
-		// this._floor.initPosition()
+		this._floor.initPosition(-this.x,-this.y);
+		// this._stage.initSynArea(-this.x,-this.y);
 	}
 
 	public addRole(dis: egret.DisplayObject): void {
-		// this.
+		this._stage.addRoleToLink(dis);
 	}
 }

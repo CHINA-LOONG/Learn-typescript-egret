@@ -56,9 +56,9 @@ class LloydMapData {
 		LloydMapData.O_1,
 	];
 	private static _fixLen: number;
-	/**小地图贴图 */
+	/**小地图渲染图 */
 	public baseMap: egret.RenderTexture;
-	/**河流贴图 */
+	/**河流渲染贴图 */
 	public riverMap: egret.RenderTexture;
 
 	//---------过度参数--------
@@ -888,7 +888,7 @@ class LloydMapData {
 
 	/**
 	 * 获得出生点
-	 * 在第一个湖泊的旁边一个随机位置
+	 * 在第一个湖泊的旁边一个随机位置 -- 地图中的位置
 	 */
 	public getBorn(): egret.Point {
 		this.initGridDic();

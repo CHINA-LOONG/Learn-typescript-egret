@@ -1,7 +1,5 @@
 class WindowsMgr {
-	/**
-     * 获取实例
-     */
+	/**获取实例 */
 	static _ins: WindowsMgr
 	static get instance() {
 		if (!this._ins) {
@@ -9,14 +7,21 @@ class WindowsMgr {
 		}
 		return this._ins
 	}
-	/**显示根节点的控制 */
+	/**屏幕显示的宽度 */
 	public static stageWidth: number = 0;
+	/**屏幕显示的高度 */
 	public static stageHeight: number = 0;
+
+	/**保证不同分辨率显示区域相同比例 */
 	public static scaleX: number = 1;
+	/**保证不同分辨率显示区域相同比例 */
 	public static scaleY: number = 1;
 
+	/**游戏的根层级 */
 	private _baseUI: eui.UILayer;
+	/**游戏层级列表 */
 	private _layerMap: Map<string, GameLayerInterface>;
+	/**游戏界面列表 */
 	private _windowMap: Map<any, GameWindow>;
 
 	public constructor() {

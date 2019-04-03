@@ -12,19 +12,25 @@ class Tiled_Ground extends egret.DisplayObjectContainer implements IRender {
 		return Tiled_Ground._ins;
 	}
 
-
-	public stageW: number;//舞台宽度
-	public stageH: number;//舞台高度
-	public worldWidth: number;//世界宽度
-	public worldHeight: number;//世界高度
-	public cf_X: number;//x系数
-	public cf_Y: number;//y系数
+	/**舞台可显示宽度 */
+	public stageW: number;
+	/**舞台可显示高度 */
+	public stageH: number;
+	/**场景实际宽度 */
+	public worldWidth: number;
+	/**场景实际高度 */
+	public worldHeight: number;
+	/**场景与地图的X比值 */
+	public cf_X: number;
+	/**场景与地图的Y比值 */
+	public cf_Y: number;
 	/**玩家角色 */
 	private _self: PlayerRole;
 	/**当前摄像机跟踪的对象 */
 	private _focus: FocusRole;
 	/**可摄像机跟踪对象列表 */
 	public roleMap: Map<number, FocusRole>//场景中可跟踪受管理的角色对象
+	/**场景容器根 */
 	private _groud: GroundLayer;
 
 
@@ -72,10 +78,12 @@ class Tiled_Ground extends egret.DisplayObjectContainer implements IRender {
 	/**将自己添加到场景*/
 	private createSelf(): void {
 		this._self = new PlayerRole();
+		//计算获取角色在世界中的实际坐标(地图中的坐标*世界与地图比值)
 		this._self.x = GameData.playerData.posX * this.cf_X;
 		this._self.y = GameData.playerData.posY * this.cf_Y;
+		//通过玩家角色位置，设置地图在屏幕显示位置
 		this._groud.initPosition(this._self.x, this._self.y);
-		this.addFocusRole(this._self);
+		this.addFocusRole(this._self);	
 		this.setFocus(this._self.id);
 		this._self.amendPosition();
 	}

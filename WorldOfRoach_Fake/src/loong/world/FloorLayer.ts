@@ -21,7 +21,9 @@ class FloorLayer extends egret.DisplayObjectContainer {
 	private _offsetW: number;
 	/**上下预加载数量(距离非格子) 额外加载*/
 	private _offsetH: number;
+	/**场景显示开始坐标 */
 	private _startX: number = -10000;//当前显示的矩形框体x坐标
+	/**场景显示开始坐标 */
 	private _startY: number = -10000;//当前显示的矩形框体y坐标
 	/**需要加载的横向格子数量 */
 	private _wCount: number;
@@ -77,5 +79,31 @@ class FloorLayer extends egret.DisplayObjectContainer {
 		TiledFloorBase.GH_HALF = this._gridH / 2;
 	}
 
+	/**初始化地面格子
+	 * @param sx左上开始的X坐标
+	 * @param sy左上开始的Y坐标
+	 */
+	private initTileds(sx: number, sy: number): void {
+		let grixX_1: number = Math.floor(sx / this._gridW) - 1;
+		let gridX_2: number = grixX_1 + this._wCount;
+
+
+
+
+
+		
+	}
+
+	/**初始化场景地面
+	 * 初始化这个显示区域的地面
+	 * @param toX显示区域X轴
+	 * @param toY显示区域Y轴 
+	 * 注意：从这个点往右下是显示区域
+	 */
+	public initPosition(toX: number, toY: number): void {
+		this._startX = toX;
+		this._startY = toY;
+		this.initTileds(this._startX - this._offsetW, this._startY - this._offsetH);
+	}
 
 }
