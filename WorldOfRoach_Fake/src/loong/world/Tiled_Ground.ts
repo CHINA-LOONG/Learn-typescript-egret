@@ -59,7 +59,10 @@ class Tiled_Ground extends egret.DisplayObjectContainer implements IRender {
 	}
 
 
-	/**初始化地图 */
+	/**初始化地图 
+	 * 200000 地图横向宽
+	 * 100000 世界纵向高
+	 */
 	public initWorld(worldW: number, worldH: number): void {
 		this.roleMap = new Map<number, FocusRole>();
 		this.stageW = WindowsMgr.instance.gameStage().stageWidth;

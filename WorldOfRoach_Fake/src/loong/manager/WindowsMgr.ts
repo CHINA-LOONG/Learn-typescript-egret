@@ -41,7 +41,7 @@ class WindowsMgr {
 
 	public initGame(ui: eui.UILayer): void {
 		this._baseUI = ui;
-		this._baseUI.addEventListener(egret.Event.RESIZE, this.stageResizeHandler, this);
+		this._baseUI.stage.addEventListener(egret.Event.RESIZE, this.stageResizeHandler, this);
 		this.stageResizeHandler(null);
 	}
 

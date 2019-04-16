@@ -31,6 +31,7 @@ class Main extends eui.UILayer {
 
 
     protected createChildren(): void {
+        SystemTimer.init();
         super.createChildren();
 
         //修改字体
@@ -96,10 +97,9 @@ class Main extends eui.UILayer {
      */
     protected createGameScene(): void {
         LogTrace.log("application loadcompleted...");
-
         WindowsMgr.instance.initGame(this);
+        //启动主Render
         RenderMgr.instance.startRender(this.stage);
-
         //初始化层级
         WindowsMgr.instance.addLayer(LayerType.LAYER_GROUND, new GameLayer());
         WindowsMgr.instance.addLayer(LayerType.LAYER_MENU,new GameLayer());
