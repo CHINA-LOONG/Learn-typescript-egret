@@ -1,3 +1,6 @@
+/**
+ * 通告对应的json文件创建数据表
+ */
 class UserConfig {
 	public static file: string = "User_json";
 	

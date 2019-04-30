@@ -16,12 +16,14 @@
 		"StartWindow": "resource/eui_skins/window/StartWindow.exml",
 		"MiniMap": "resource/eui_skins/window/MiniMap.exml",
 		"AlertWindow": "resource/eui_skins/window/AlertWindow.exml",
-		"MainLoaderWindow": "resource/eui_skins/window/MainLoaderWindow.exml"
+		"MainLoaderWindow": "resource/eui_skins/window/MainLoaderWindow.exml",
+		"RockerBar": "resource/eui_skins/display/RockerBar.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/CheckBoxSkin.exml",
+		"resource/eui_skins/display/RockerBar.exml",
 		"resource/eui_skins/HScrollBarSkin.exml",
 		"resource/eui_skins/HSliderSkin.exml",
 		"resource/eui_skins/ItemRendererSkin.exml",

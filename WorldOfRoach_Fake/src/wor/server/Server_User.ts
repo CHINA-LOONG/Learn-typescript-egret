@@ -36,15 +36,15 @@ class Server_User {
 	 * 创建角色并且写本地
 	 */
 	private userCreate(msg: string): string {
-		let posJson:Object = JSON.parse(msg);
-		let tempUser:UserConfig = LocalData.getObjectByKv("UserConfig",{id:1});
+		let posJson:Object = JSON.parse(msg);		//解析角色的数据，当前包含角色出生坐标
+		let tempUser:UserConfig = LocalData.getObjectByKv("UserConfig",{id:1});		//获取id=1的角色模板
 		let obj:Object = new Object();
 		ObjectUtil.copyTo(tempUser,obj);
 		obj["posX"] = posJson["posX"];
 		obj["posY"] = posJson["posY"];
-		localStorage.setItem(Server_User.T_USER_DATA,JSON.stringify(obj));
-		GameData.historyData.has =1;
-		localStorage.setItem(Server_User.T_USER_HISTORY,JSON.stringify(GameData.historyData));
+		localStorage.setItem(Server_User.T_USER_DATA,JSON.stringify(obj));						//缓存角色的数据
+		GameData.historyData.has =1;															//设置存在历史记录
+		localStorage.setItem(Server_User.T_USER_HISTORY,JSON.stringify(GameData.historyData));	//缓存角色包含历史记录
 		return null;
 	}
 }

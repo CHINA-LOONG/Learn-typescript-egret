@@ -4,6 +4,9 @@
  * @version 1.0
  */
 class RandomUtil {
+	/**
+	 * 获取一定数量在某个范围内的随机数，元素数量为随机数×2(x1,y1,x2,y2,...,xn,yn)
+	 */
 	public static getRandomPoints(sizeW: number, sizeH: number, border: number, num: number): Array<number> {
 		let pointsStr: Array<string> = new Array<string>();
 		let points: Array<number> = new Array<number>();

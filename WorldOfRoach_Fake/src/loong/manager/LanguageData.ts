@@ -11,6 +11,7 @@ class LanguageData {
 	public constructor() {
 		this.langMap = new Map<number,string>();
 		this.langMap.set(10001,"正在创建世界..");
+		this.langMap.set(10002,"正在加载地图..");
 	}
 	
 	public getLang(key:number):string

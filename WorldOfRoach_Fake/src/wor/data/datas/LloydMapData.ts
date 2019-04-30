@@ -89,15 +89,18 @@ class LloydMapData {
 	/**构建区域组 */
 	private buildGridDic(w: number, h: number): void {
 		this._gridDic = new Map<string, Array<Area2D>>();
+		//计算地图横向区块数量
 		let wCount: number = Math.floor(w / this._gridDicW) + 1;
+		//计算地图纵向区块数量		
 		let hCount: number = Math.floor(h / this._gridDicW) + 1;
+		//通过纵横索引来加入区块列表
 		for (let i: number = 0; i < wCount; i++) {
 			for (let j: number = 0; j < hCount; j++) {
 				this._gridDic.set(i + "_" + j, new Array<Area2D>());
 			}
 		}
 	}
-	/**初始化区域组 */
+	/**初始化区域组 吧不同的区域划入组*/
 	private initGridDic(): void {
 		let key: any;
 		let area: Area2D;
@@ -109,21 +112,192 @@ class LloydMapData {
 		}
 	}
 
+	public getFloorTypeByArea(px:number,py:number):number{
+		//计算地图坐标点的场景区块坐标
+		let pox: number = Math.floor(px / this._gridDicW);
+		let poy: number = Math.floor(py / this._gridDicW);
+		
+		let arr: Array<Area2D>;
+		let key: any;
+		let area: Area2D;
+		let minDst: number = 1000000;
+		let targetType: number = 0;
+		//获取上下左右九宫的区域尽兴判断
+		for (var i: number = pox - 1; i <= pox + 1; i++) {
+			for (var j: number = poy - 1; j <= poy + 1; j++) {
+				arr = this._gridDic.get(i + "_" + j);
+				if (arr == null)
+					continue;
+				for (key in arr) {
+					area = arr[key];
+					var dis: number = TriangleUtil.distance(px - area.centerPoint.x, py - area.centerPoint.y);
+					if (dis < minDst) {
+						minDst = dis;
+						targetType = area.type;
+					}
+				}
+			}
+		}
+		return targetType;
+	}
+
+
+	/**通过像素坐标获取地形类型对应的位图
+	 * 如果在地形里没有找到对应的，则返回相近的
+	 * @param pxpy--小地图坐标
+	 */
+	public getFloorType(px:number,py:number):number{
+		let color:number[];
+		//先从河流图片中检测是否是河流
+		if(GameConfig.showRiver){
+			color = this.riverMap.getPixel32(px,py);
+			if(color[3]>=10)
+				return LloydMapData.LAKE;
+		}
+		color = this.baseMap.getPixel32(px,py);
+		let cType:number = color[0]<<16|color[1]<<8|color[2];
+		if(LloydMapData._fixFloorTypes.indexOf(cType)<0)
+			return -cType;
+		return cType;
+	}
+
+	/** 根据大地图的方格xy坐标获取地图类型
+	 * @param px--场景坐标
+	 * @param py--场景坐标
+	 */
+	public getFloorTypeByPx(px:number,py:number):number{
+		//进行转换成小地图的坐标
+		px=Math.floor(px/GameConfig.map_cfx);
+		//y坐标需要坐标转换
+		py = this.baseMap.$bitmapHeight-Math.floor(py/GameConfig.map_cfy);
+		return this.getFloorType(px,py);
+	}
+
+	/**从存储的信息中读取数据 */
+	public build(obj:Object):void{
+		this.sizeX = obj["w"];
+		this.sizeY = obj["h"];
+
+		this.buildGridDic(this.sizeX,this.sizeY);
+		let pDic:Map<number,AreaPoint> = new Map<number,AreaPoint>();
+		let p2dObj:Object;
+		let p2d:AreaPoint;
+		//读取顶点信息
+		while(obj["p2d"].length>0){
+			p2dObj = obj["p2d"].pop();
+			p2d = new AreaPoint();
+			p2d.id = p2dObj["id"];
+			p2d.x = p2dObj["x"];
+			p2d.y = p2dObj["y"];
+			p2d.river = p2dObj["r"];
+			pDic.set(p2d.id,p2d);
+		}
+		//读取区域和区域对应的顶点
+		let area :Area2D;
+		let areaObj:Object;
+		let arr:Array<Object> = new Array<Object>();
+		while(obj["areas"].length>0){
+			area = new Area2D();
+			areaObj = obj["areas"].pop();
+			arr.push(areaObj);
+			area.id = areaObj["id"];
+			area.centerPoint = new egret.Point(areaObj["cp"].x,areaObj["cp"].y);
+			area.type = areaObj["ty"];
+			this._areaDic.set(area.id,area);
+			this._areas.push(area);
+			while(areaObj["vers"].length>0)
+				area.vertex.push(pDic.get(areaObj["vers"].pop()));
+		}
+		//读取区域周围的区域
+		while(arr.length>0){
+			areaObj = arr.pop();
+			area = this._areaDic.get(areaObj["id"]);
+			while(areaObj["nears"].length>0)
+				area.neighbor.push(this._areaDic.get(areaObj["nears"].pop()));
+		}
+		//读取河流的信息
+		let riverObj:Object;
+		let river:River;
+		while(obj["river"].length>0){
+			riverObj = obj["river"].pop();
+			river = new River();
+			this._rivers.push(river);
+			river.startArea = this._areaDic.get(riverObj["id"]);
+			//河流下游的点
+			while(riverObj["ps"].length>0)
+				river.downsteams.push(pDic.get(riverObj["ps"].shift()));
+		}
+		this.initGridDic();
+	}
+
 	/**
 	 * 获取存储用的DB信息
 	 */
 	public getDb(): Object {
 		let obj: Object = new Object();
+		//记录地图的宽高
 		obj["w"] = this.sizeX;
 		obj["h"] = this.sizeY;
+		//记录地图的区块顶点和河流
+		obj["areas"] = new Array<any>();
+		obj["p2d"] = new Array<any>();
+		obj["river"] = new Array<any>();
 
+		let key: any;
+		let area: Area2D;
+		let p2d: AreaPoint;
+		let setsP: number[] = [];
+
+		for (key in this._areas) {
+			area = this._areas[key];
+			let areaObj: Object = new Object();
+			obj["areas"].push(areaObj);
+			areaObj["id"] = area.id;
+			areaObj["cp"] = area.centerPoint;
+			areaObj["ty"] = area.type;
+			areaObj["nears"] = new Array<any>();
+			for (key in area.neighbor)
+				areaObj["nears"].push(area.neighbor[key].id);
+
+			areaObj["vers"] = new Array<any>();
+			for (key in area.vertex)
+				areaObj["vers"].push(area.vertex[key].id);
+
+			for (key in area.vertex) {
+				p2d = area.vertex[key];
+				if (setsP.indexOf(p2d.id) >= 0)
+					continue;
+				setsP.push(p2d.id);
+				let p2dObj: Object = new Object();
+				p2dObj["id"] = p2d.id;
+				p2dObj["x"] = p2d.x;
+				p2dObj["y"] = p2d.y;
+				p2dObj["r"] = p2d.river;
+				obj["p2d"].push(p2dObj);
+			}
+		}
+		//保存河流
+		let river: River;
+		for (key in this._rivers) {
+			river = this._rivers[key];
+			let r: Object = new Object();
+			r["id"] = river.startArea.id;
+			r["ps"] = new Array<any>();
+			for (key in river.downsteams) {
+				p2d = river.downsteams[key];
+				r["ps"].push(p2d.id);
+			}
+			obj["river"].push(r);
+		}
 		return obj;
 	}
 
 
 	/**
 	 * 赋值一份原始的多边形数据
-	 * @param list
+	 * @param list 	多边形列表
+	 * @param w	
+	 * @param h	
 	 */
 	public initData(list: Array<Pol2D>, w: number, h: number): void {
 		this.buildGridDic(w, h);
@@ -132,6 +306,7 @@ class LloydMapData {
 		this._altitude = 0;
 		let key: any;
 		let pol: Pol2D;
+		//通过多边形，创建区域属性列表（用于划分湖泊/陆地）
 		for (key in list) {
 			pol = list[key];
 			let area2D: Area2D = new Area2D();
@@ -143,6 +318,8 @@ class LloydMapData {
 			area2D.centerPoint = new egret.Point(pol.centerPoint.x, pol.centerPoint.y);
 			//设置是否为最外圈的多边形
 			area2D.isOutside = pol.isos;
+
+			//通过多边形顶点来构建区域的顶点
 			let p2d: Point2D;
 			for (key in pol.vertex) {
 				p2d = pol.vertex[key];
@@ -176,7 +353,7 @@ class LloydMapData {
 			//计算多边形顶点相对应噪声图的位置
 			let xp: number = Math.floor(area.centerPoint.x * xbl);
 			let yp: number = Math.floor(area.centerPoint.y * ybl);
-			//获取多边形中心对应噪声图的数据
+			//获取多边形中心对应噪声图的数据 --这个数值对应地形的类型
 			let color: number = btd[xp][yp];
 			color += this._altitude;
 			areaTotal++;
@@ -532,7 +709,7 @@ class LloydMapData {
 			//遍历所有相邻区域 --海拔最高点的区域周围不存在相同区域
 			for (key in ners) {
 				area = ners[key];
-				let index:number = inlands.indexOf(area);
+				let index: number = inlands.indexOf(area);
 				if (index >= 0)
 					inlands.splice(index, 1);
 			}
@@ -707,20 +884,20 @@ class LloydMapData {
 	/** 获取在某个地形包围中的某个地形*/
 	private findInTerrain(type: number): Array<Area2D> {
 		let all: Array<Area2D> = new Array<Area2D>();
-		let key:any;
-		let area:Area2D;
-		for(key in this._areas){
+		let key: any;
+		let area: Area2D;
+		for (key in this._areas) {
 			area = this._areas[key];
-			if(area.type!=type)
+			if (area.type != type)
 				continue;
-			let isInType:boolean = true;
-			for(key in area.neighbor){
-				if(area.neighbor[key].type!=type){
+			let isInType: boolean = true;
+			for (key in area.neighbor) {
+				if (area.neighbor[key].type != type) {
 					isInType = false;
 					break;
 				}
 			}
-			if(isInType)
+			if (isInType)
 				all.push(area);
 		}
 		return all;
@@ -831,7 +1008,8 @@ class LloydMapData {
 
 	/**
 	 * 获取地图基础纹理
-	 * @return
+	 * @return 地图纹理图
+	 * 地形类型对应相应的颜色
 	 */
 	public getMapBaseTexture(tsx: number = 800, tsy: number = 800): egret.Shape {
 		//地图与数据x轴缩放

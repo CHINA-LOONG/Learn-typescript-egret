@@ -18,5 +18,10 @@
         "path": "wor\\view\\MainLoaderWindow.ts",
         "class": "MainLoaderWindow",
         "parentPath": ""
+    },
+    "16a5cf96e13": {
+        "path": "..\\resource\\eui_skins\\display\\RockerBar.ts",
+        "class": "RockerBar",
+        "parentPath": ""
     }
 }

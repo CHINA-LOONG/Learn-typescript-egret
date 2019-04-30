@@ -34,31 +34,41 @@ class GroundLayer extends egret.DisplayObjectContainer {
 	private _floor: FloorLayer;
 	private _stage: StageLayer;
 
-	/**舞台宽度,舞台高度,世界宽度,世界高度 */
+	/**创建地图的容器 舞台宽度,舞台高度,世界宽度,世界高度 */
 	public constructor(maxW: number, maxH: number, worldW: number, worldH: number) {
 		super();
+		//计算舞台显示的最大宽度--高度
 		this._maxW = maxW / WindowsMgr.scaleX;
 		this._maxH = maxH / WindowsMgr.scaleY;
-
+		//场景的宽度--高度
 		this._worldW = worldW;
 		this._worldH = worldH;
-
+		//舞台显示宽度的一半--高度的一半
 		this._hafX = this._maxW / 2;
 		this._hafY = this._maxH / 2;
 
+		/**小框的左上角的偏移值
+		 * ┌──────────────────┐
+		 * │                  │
+		 * │                  │
+		 * │          ┌───────┤
+		 * │          │   ·   │
+		 * └──────────┴───────┘
+		 */
 		this._maxOffsetX = -this._worldW + this._maxW + GameConfig.GRID_W / 2;
 		this._maxOffsetY = -this._worldH + this._maxH;
-
+		//地面的容器
 		this._floor = new FloorLayer(worldW, worldH);
 		this.addChild(this._floor);
+		//植被的容器
 		this._stage = new StageLayer(worldW, worldH);
 		this.addChild(this._stage);
 	}
 
 	/**
 	 * 初始化当前位置 
-	 * @param 在世界中的X坐标
-	 * @param 在世界中的Y坐标
+	 * @param 在世界中的X坐标舞台中间
+	 * @param 在世界中的Y坐标舞台中间
 	 * ┌──────────────────────┐
 	 * │                      │
 	 * │                      │
@@ -69,8 +79,10 @@ class GroundLayer extends egret.DisplayObjectContainer {
 	 * [场景]相对于[显示]左上角的坐标
 	 */
 	public initPosition(cx: number, cy: number): void {
+		//左上范围  舞台中间加上半屏的像素
 		this._toX = -cx + this._hafX;
 		this._toY = -cy + this._hafY;
+		//检测左上和右下是否超出场景
 		if (this._toX > 0)
 			this._toX = 0;
 		else if (this._toX < this._maxOffsetX)
@@ -82,10 +94,31 @@ class GroundLayer extends egret.DisplayObjectContainer {
 		//设置当前的场景坐标
 		this.x = this._toX;
 		this.y = this._toY;
-		this._floor.initPosition(-this.x,-this.y);
-		// this._stage.initSynArea(-this.x,-this.y);
+		//初始化地面坐标相应的数据  
+		this._floor.initPosition(-this.x, -this.y);
+		//初始化舞台元素相应的数据
+		this._stage.initSynArea(-this.x, -this.y);
 	}
 
+
+	public synPositionTo(cx:number,cy:number):void{
+		this._toX = -cx+this._hafX;
+		this._toY = -cy+this._hafY;
+		if(this._toX>0)
+			this._toX=0;
+		else if(this._toX<this._maxOffsetX)
+			this._toX=this._maxOffsetX;
+		if(this._toY>0)
+			this._toY=0;
+		else if(this._toY<this._maxOffsetY)
+			this._toY=this._maxOffsetY;
+		this.x = this._toX;
+		this.y = this._toY;
+		if(this._floor.synPosition(-this.x,-this.y))
+			this._stage.trySynArea(-this.x,-this.y);
+	}
+
+	/**添加一个演员角色 */
 	public addRole(dis: egret.DisplayObject): void {
 		this._stage.addRoleToLink(dis);
 	}

@@ -11,4 +11,7 @@ class GameData {
 	
 	/**植被数据 */
 	public static plantData:PlantData = new PlantData();
+	/**游戏时间数据 */
+	public static timeData:GameTimeData = new GameTimeData();
+
 }

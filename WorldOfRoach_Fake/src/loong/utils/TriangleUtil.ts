@@ -85,4 +85,8 @@ class TriangleUtil {
 		return false;
 	}
 
+	/**求距离 */
+	public static distance(x_x: number, y_y: number): number {
+		return Math.abs(Math.sqrt(x_x * x_x + y_y * y_y));
+	}
 }

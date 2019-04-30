@@ -21,8 +21,52 @@ class LinkArray {
 	private _ite: ILink;
 
 
+	/**重置迭代 */
+	public resetIteration(): void {
+		this._ite = null;
+	}
+
+	/**遍历下一个 */
+	public next(): any {
+		if (this._ite == null)
+			this._ite = this._start;
+		else
+			this._ite = this._ite.getNext();
+		return this._ite;
+	}
+
+	/**按照指定的参数重新构建link（排序）
+	 * 为链表设置一个排序的键,因为用到的地方比较单一,暂时不实现多字段。
+	 */
+	public buildLink(arg: string): void {
+		this._sortArg = arg;
+		var sortBy: string = this._sortArg;
+		this._autoLink = true;
+		this._list.sort(function (a: ILink, b: ILink): number {
+			if (a[sortBy] > b[sortBy])
+				return 1;
+			else if (a[sortBy] == b[sortBy])
+				return 0;
+			return -1;
+		});
+		var i: number = 0;
+		var ele: ILink;
+		for (i; i < this._list.length; i++) {
+			ele = this._list[i];
+			if (this._list.length > i + 1)//设置下一个
+				ele.setNext(this._list[i + 1]);
+			else//设置为结束
+				this._end = ele;
+			if (i == 0)
+				this._start = ele;
+			else
+				ele.setPre(this._list[i - 1]);
+		}
+	}
+
+
 	/**
-	 * 像link中添加一个对象
+	 * 向link中添加一个对象
 	 * @param 添加的元素 必须实现ILink
 	 * @returns 添加的元素所在位置(排序后的)
 	 */
@@ -38,6 +82,27 @@ class LinkArray {
 			this._list.push(ele);
 			return this._list.length - 1;
 		}
+	}
+
+	/**从link中删除一个对象
+	 * @param 删除的元素 必须实现ILink
+	 */
+	public remove(ele: any): void {
+		//检测是否存在此元素
+		let index: number = this._list.indexOf(ele);
+		if (index < 0)
+			return;
+		//从列表中删除元素
+		this._list.splice(index, 1);
+		//修改链表中的元素链接
+		var lk: ILink = ele as ILink;
+		if (lk.getNext() != null)
+			lk.getNext().setPre(lk.getPre());
+		if (lk.getPre() != null)
+			lk.getPre().setNext(lk.getNext());
+		//修改删除元素的链接
+		lk.setPre(null);
+		lk.setNext(null);
 	}
 
 	/**

@@ -22,22 +22,23 @@ class UserModule extends ModuleBase {
 		return null;
 	}
 
-	//创建游戏角色
+	/**创建游戏角色 */
 	private createUser(type: number, mess: string): string {
 		if (type == UserModule.TYPE_RQ)
 			return mess;
 		else {
 			LogTrace.log("create new player completed!!");
-			GameManager.instance.startOldGame();
+			GameManager.instance.startOldGame();			//创建角色成功后均已游戏记录方式进入游戏
 		}
 		return null;
 	}
-
+	/**进入游戏 */
 	private userEnterGame(type: number, msg: string): string {
 		if (type == UserModule.TYPE_RQ)
 			return msg;
 		else {
 			let obj:Object = JSON.parse(msg);
+			//赋值角色数据到游戏缓存玩家数据
 			ObjectUtil.copyTo(obj,GameData.playerData);
 			GameManager.instance.enterGame();
 		}

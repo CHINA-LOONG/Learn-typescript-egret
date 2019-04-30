@@ -12,9 +12,9 @@ class WindowsMgr {
 	/**屏幕显示的高度 */
 	public static stageHeight: number = 0;
 
-	/**保证不同分辨率显示区域相同比例 */
+	/**保证不同分辨率显示区域相同比例 W÷1254*/
 	public static scaleX: number = 1;
-	/**保证不同分辨率显示区域相同比例 */
+	/**保证不同分辨率显示区域相同比例 W÷1254*/
 	public static scaleY: number = 1;
 
 	/**游戏的根层级 */
