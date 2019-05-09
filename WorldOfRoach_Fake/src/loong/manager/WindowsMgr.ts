@@ -38,30 +38,34 @@ class WindowsMgr {
 		WindowsMgr.scaleY = WindowsMgr.scaleX;
 	}
 
-
+	/**初始化 */
 	public initGame(ui: eui.UILayer): void {
 		this._baseUI = ui;
 		this._baseUI.stage.addEventListener(egret.Event.RESIZE, this.stageResizeHandler, this);
-		this.stageResizeHandler(null);
+		WindowsMgr.stageWidth = this._baseUI.stage.stageWidth;
+		WindowsMgr.stageHeight = this._baseUI.stage.stageHeight;
+		this.initScale();
 	}
-
+	/**添加一个层级 */
 	public addLayer(layerName: string, layer: GameLayerInterface): void {
 		this._layerMap.set(layerName, layer);
 		this._baseUI.addChild(layer as GameLayer);
 		LogTrace.log("add layer:" + layerName);
 	}
 
+	/**开启一个窗口 */
 	public openWindow(cls: any): void {
 		if (!this._windowMap.has(cls))
 			this._windowMap.set(cls, new cls());
 		let win: GameWindow = this._windowMap.get(cls);
 		if (!win.stage) {
-			if (this._layerMap.has(win.layerType)) {
+			if (this._layerMap.has(win.layerType)) //如果有對應層級可以打開
+			{
 				this._layerMap.get(win.layerType).addWindow(win);
 				LogTrace.log("openWindow->" + win.typeName);
 			}
 			else {
-				throw (new Error("NodepErrorType.LAYER_NO_EXISTENT"));
+				throw (new Error(NodepErrorType.LAYER_NO_EXISTENT));
 			}
 		}
 	}
@@ -110,25 +114,22 @@ class WindowsMgr {
 	/**
 	 * 指定回收
 	 */
-	public gcWindow(key:any):void
-	{
+	public gcWindow(key: any): void {
 
 	}
 
 	/**
 	 * 回收所有没有在显示列表中的界面
 	 */
-	public gcWindowAll():void
-	{
+	public gcWindowAll(): void {
 
 	}
 
-		/**
-	 * 快速获取游戏舞台
-	 */
-	public gameStage():egret.Stage
-	{
-		if(this._baseUI!=null)
+	/**
+ * 快速获取游戏舞台
+ */
+	public gameStage(): egret.Stage {
+		if (this._baseUI != null)
 			return this._baseUI.stage;
 		else
 			return null;

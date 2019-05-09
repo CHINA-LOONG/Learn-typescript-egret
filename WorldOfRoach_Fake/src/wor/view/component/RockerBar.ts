@@ -4,6 +4,8 @@ class RockerBar extends GameWindow implements eui.UIComponent {
 	/**背景圆圈图 */
 	private _bgShape: egret.Shape;
 
+
+	/**UI操作按钮 */
 	public barBtn:eui.Button;
 
 	public constructor() {

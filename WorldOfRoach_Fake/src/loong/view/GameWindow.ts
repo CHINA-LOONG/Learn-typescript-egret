@@ -11,9 +11,9 @@ class GameWindow extends eui.Component {
     /**是否有遮罩 */
     public pop: boolean = false;
     /**界面布局方式 */
-    private __align:string = "NONE";
-    private __offsetX:number = 0;
-    private __offsetY:number = 0;
+    private __align: string = "NONE";
+    private __offsetX: number = 0;
+    private __offsetY: number = 0;
 
     protected partAdded(partName: string, instance: any): void {
         super.partAdded(partName, instance);
@@ -28,14 +28,14 @@ class GameWindow extends eui.Component {
     /**
      * 再次打开界面
      */
-    public reOpen():void{
+    public reOpen(): void {
         this.visible = true;
     }
 
     /**
      * 捕获到对应的通知
      */
-    public update(updateType:number,updateObject:any):void{
+    public update(updateType: number, updateObject: any): void {
 
     }
 
@@ -50,17 +50,46 @@ class GameWindow extends eui.Component {
     /**
      * 舞台大小发生变化
      */
-    public resize():void{
-
+    public resize(): void {
+        switch (this.__align) {
+            case AlignType.TOP_LEFT:
+                this.x = this.__offsetX;
+                this.y = this.__offsetY;
+                break;
+            case AlignType.TOP_CENTER:
+                this.x = (WindowsMgr.stageWidth - this.width * this.scaleX) / 2 + this.__offsetX;
+                this.y = this.__offsetY;
+                break;
+            case AlignType.TOP_RIGHT:
+                this.x = WindowsMgr.stageWidth - this.width * this.scaleX + this.__offsetX;
+                this.y = this.__offsetY;
+                break;
+            case AlignType.CENTER:
+                this.x = (WindowsMgr.stageWidth - this.width * this.scaleX) / 2 + this.__offsetX;
+                this.y = (WindowsMgr.stageHeight - this.height * this.scaleY) / 2 + this.__offsetY;
+                break;
+            case AlignType.BOTTOM_LEFT:
+                this.x = this.__offsetX;
+                this.y = WindowsMgr.stageHeight - this.height * this.scaleY + this.__offsetY;
+                break;
+            case AlignType.BOTTOM_CENTER:
+                this.x = this.x = (WindowsMgr.stageWidth - this.width * this.scaleX) / 2 + this.__offsetX;
+                this.y = WindowsMgr.stageHeight - this.height * this.scaleY + this.__offsetY;
+                break;
+            case AlignType.BOTTOM_RIGHT:
+                this.x = WindowsMgr.stageWidth - this.width * this.scaleX + this.__offsetX;
+                this.y = WindowsMgr.stageHeight - this.height * this.scaleY + this.__offsetY;
+                break;
+        }
     }
 
-public align(alignType:string,offsetX:number =0,offsetY:number = 0):void{
-    this.__align = alignType;
-    this.__offsetX = offsetX*this.scaleX;
-    this.__offsetY = offsetY*this.scaleY;
-    if(this.stage!=null){
-        this.resize();
+    public align(alignType: string, offsetX: number = 0, offsetY: number = 0): void {
+        this.__align = alignType;
+        this.__offsetX = offsetX * this.scaleX;
+        this.__offsetY = offsetY * this.scaleY;
+        if (this.stage != null) {
+            this.resize();
+        }
     }
-}
 
 }

@@ -83,7 +83,15 @@ class FloorLayer extends egret.DisplayObjectContainer {
 		TiledFloorBase.GH_HALF = this._gridH / 2;
 	}
 
-	/** */
+	/**预添加地板 */
+	private preAddFloor(px: number, py: number): void {
+		var key: string = px + "_" + py;
+		if (this._floorMap.get(key) != null)
+			return;
+		this._preAddFloors.push(px);
+		this._preAddFloors.push(py);
+	}
+	/**添加地板 */
 	private addFloor(px: number, py: number): void {
 		let key: string = px + "_" + py;
 		//检测当前地板是否已经创建
@@ -98,7 +106,39 @@ class FloorLayer extends egret.DisplayObjectContainer {
 		if (floor.fType < 0)
 			this._errorFloor.push(floor);
 	}
+	/**删除地板 */
+	private delFloor(key: string): void {
+		if (this._floorMap.get(key) != null) {
+			this._floorMap.get(key).removeFloor();
+			this._floorMap.delete(key);
+		}
+	}
 
+	/**更改删除和添加列表 */
+	private changeDeleteAndCreate(x1: number, x2: number, y1: number, y2: number): void {
+		var px: number = this._gridX_from;
+		var py: number = this._gridY_from;
+		//删除不需要的
+		for (px; px <= this._gridX_to; px++) {
+			for (py = this._gridY_from; py <= this._gridY_to; py++) {
+				if ((px < x1 || px > x2) || (py < y1 || py > y2))//不符合现在的区域条件进行删除
+				{
+					this.delFloor(px + "_" + py);
+				}
+			}
+		}
+		px = x1;
+		py = y1;
+		for (px; px <= x2; px++) {
+			for (py = y1; py <= y2; py++) {
+				this.preAddFloor(px, py);
+			}
+		}
+		this._gridX_from = x1;
+		this._gridX_to = x2;
+		this._gridY_from = y1;
+		this._gridY_to = y2;
+	}
 
 	/**構建格子範圍內的地面 */
 	private initCreate(x1: number, x2: number, y1: number, y2: number): void {
@@ -161,6 +201,31 @@ class FloorLayer extends egret.DisplayObjectContainer {
 
 		this.initCreate(gridX_1, gridX_2, gridY_1, gridY_2);
 	}
+	/**
+	 * 拼装地板
+	 * 用一个字典来存放（key->格子编号）
+	 * 计算左上角的点对应的格子编号(可以得到应该显示的格子编号范围)
+	 * 通过和上一次格子的移动方向对比，可以确定删除哪些，同时可以确定添加哪些
+	 * 添加格子的时候直接取baseMap像素*系数可获得格子位置
+	 * 通过像素和格子的宽度和高度，可以获得当前格子的编号
+	 * 通过格子编号可获得格子坐标
+	 */
+	private synTileds(sx: number, sy: number): void {
+		var gridX_1: number = Math.floor(sx / this._gridW) - 1;
+		var gridX_2: number = gridX_1 + this._wCount;
+		var gridY_1: number = (Math.floor(sy / this._gridH) - 1) * 2;
+		var gridY_2: number = gridY_1 + this._hCount;
+		if (gridX_1 < 0)
+			gridX_1 = 0;
+		if (gridX_2 > this._maxGridW)
+			gridX_2 = this._maxGridW;
+		if (gridY_1 < 0)
+			gridY_1 = 0;
+		if (gridY_2 > this._maxGridH)
+			gridY_2 = this._maxGridH;
+		this.changeDeleteAndCreate(gridX_1, gridX_2, gridY_1, gridY_2);
+	}
+
 
 	/**初始化场景地面
 	 * 初始化这个显示区域的地面
@@ -182,7 +247,17 @@ class FloorLayer extends egret.DisplayObjectContainer {
 	 * 注意：从这个点往右下是显示区域
 	 */
 	public synPosition(toX: number, toY: number): boolean {
-		
+		if (Math.abs(this._startX - toX) > this._offsetW || Math.abs(this._startY - toY) > this._offsetH) {
+			this._changeDrawCount++;
+			if (this._changeDrawCount >= 10) {
+				this._errorFloorDic.clear();
+				this._changeDrawCount = 0;
+			}
+			this._preAddFloors = [];
+			this._startX = toX;
+			this._startY = toY;
+			this.synTileds(this._startX - this._offsetW, this._startY - this._offsetH);
+		}
 		return false;
 	}
 }

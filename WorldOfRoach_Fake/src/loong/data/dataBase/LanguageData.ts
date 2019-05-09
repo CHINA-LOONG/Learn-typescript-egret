@@ -1,3 +1,9 @@
+/**
+ * 测试用语言包
+ * 这里不牵涉配置文件,只是写死在业务中引用到,在替换版本后可实现配置文件多语言加载
+ * @author loong
+ * @version 1.0
+ */
 class LanguageData {
 
 	private static _ins: LanguageData;

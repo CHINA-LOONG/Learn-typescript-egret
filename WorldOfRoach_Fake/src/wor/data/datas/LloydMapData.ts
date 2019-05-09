@@ -1037,25 +1037,32 @@ class LloydMapData {
 
 
 	public getRiverTexture(tsx: number = 800, tsy: number = 800): egret.Shape {
+
+
+
 		var sx: number = tsx / this.sizeX;
 		var sy: number = tsy / this.sizeY;
+		var areaTotal: number = 0;
+		var landCount: number = 0;
 
 		let sp: egret.Shape = new egret.Shape();
-		// sp.graphics.beginFill(0, 0.01);
-		// sp.graphics.drawRect(0, 0, tsx, tsy);
-		// sp.graphics.endFill();
+		sp.graphics.beginFill(0, 0.01);
+		sp.graphics.drawRect(0, 0, tsx, tsy);
+		sp.graphics.endFill();
 
+		let area: Area2D;
 		let key: any;
+		let i: number;
+		let rvP2d: AreaPoint;
 		let river: River;
-		var rvP2d: AreaPoint;
-		for (key in this._rivers) {
+				for (key in this._rivers) {
 			river = this._rivers[key];
 			rvP2d = river.downsteams[0];
 			sp.graphics.lineStyle(1, LloydMapData.LAKE, 1, true);
 			sp.graphics.moveTo(river.startArea.centerPoint.x * sx, river.startArea.centerPoint.y * sy);
-			for (let i: number = 0; i < river.downsteams.length; i++) {
+			for (i = 0; i < river.downsteams.length; i++) {
 				sp.graphics.lineTo(river.downsteams[i].x * sx, river.downsteams[i].y * sy);
-				if (river.downsteams[i].river > 1)//根据水量来绘制
+				if (river.downsteams[i].river > 1)
 					sp.graphics.lineStyle(river.downsteams[i].river, LloydMapData.LAKE, 1, true);
 				else
 					sp.graphics.lineStyle(1, LloydMapData.LAKE, 1, true);

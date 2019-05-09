@@ -86,24 +86,46 @@ class RoomMaker implements IRender {
 		}
 		this.delArea(initLst);
 	}
+	/**同步创建 */
+	public synCreate(fromX: number, fromY: number): void {
+		var initLst: string[] = [];
+		var tox: number;
+		var toy: number;
+		var key: string;
+		for (var i: number = 0; i < RoomMaker._grids.length; i += 2) {
+			tox = fromX + RoomMaker._grids[i];
+			toy = fromY + RoomMaker._grids[i + 1];
+			if (tox < 0 || toy < 0 || tox >= this._maxWPos || toy > this._maxHPos)
+				continue;
+			key = tox + "_" + toy;
+			if (GameData.plantData.hasPlantArea(key))//如果拥有这个区域
+				GameData.plantData.loadArea(key);
+			else {
+				GameData.plantData.createArea(key);
+				this.createArea(tox, toy);
+			}
+			initLst.push(key);
+		}
+		this.delArea(initLst);
+	}
 
 	/**过滤区域,方便维护(在玩家比较空闲的时候来做删除操作) */
 	private delArea(newLst: string[]): void {
-		let key:any;
-		let keyStr:string;
-		
+		let key: any;
+		let keyStr: string;
+
 		//从待删除列表删除新价值的，保留准备删除的
-		for(key in newLst){
+		for (key in newLst) {
 			keyStr = newLst[key];
-			let index:number = this._waitForDelPlants.indexOf(keyStr);
-			if(index>=0)
-				this._waitForDelPlants.splice(index,1);
+			let index: number = this._waitForDelPlants.indexOf(keyStr);
+			if (index >= 0)
+				this._waitForDelPlants.splice(index, 1);
 		}
 
-		for(key in this._focusPlants){
+		for (key in this._focusPlants) {
 			keyStr = this._focusPlants[key];
 			//加入待删除列表
-			if(newLst.indexOf(keyStr)<0&&this._waitForDelPlants.indexOf(keyStr)<0)
+			if (newLst.indexOf(keyStr) < 0 && this._waitForDelPlants.indexOf(keyStr) < 0)
 				this._waitForDelPlants.push(keyStr);
 		}
 		this._focusPlants = newLst;
@@ -121,70 +143,70 @@ class RoomMaker implements IRender {
 				continue;
 
 			this._counter.set(ft, 0);
-			this._plantRandomArea.set(ft,[]);
+			this._plantRandomArea.set(ft, []);
 		}
 		//植被存储列表
-		let lst:Array<Object> = new Array<Object>();
+		let lst: Array<Object> = new Array<Object>();
 		//计算小格子的开始和结束索引
-		let x1:number = fromX*this._sgWCount;
+		let x1: number = fromX * this._sgWCount;
 		let x2: number = x1 + this._sgWCount;
 		let y1: number = fromY * this._sgHCount;
 		let y2: number = y1 + this._sgHCount;
 
 
-		let pos:egret.Point;
+		let pos: egret.Point;
 		//遍历大区内的所有小方格区域
-		for(let i:number=x1;i<x2;i+=1){
-			for(let j:number = y1;j<y2;j+=2){
+		for (let i: number = x1; i < x2; i += 1) {
+			for (let j: number = y1; j < y2; j += 2) {
 				//获取方格的坐标
-				pos = MapUtil.getPosByGrid(i,j);
+				pos = MapUtil.getPosByGrid(i, j);
 				//获取方格位置的地形类型
-				ft = GameData.mapData.getFloorTypeByPx(pos.x,pos.y);
-				if(ft<=0)//非法地图无视
+				ft = GameData.mapData.getFloorTypeByPx(pos.x, pos.y);
+				if (ft <= 0)//非法地图无视
 					continue;
-				else if(ft == LloydMapData.SEA||ft == LloydMapData.LAKE)
+				else if (ft == LloydMapData.SEA || ft == LloydMapData.LAKE)
 					continue;
-				let c:number = this._counter.get(ft);
+				let c: number = this._counter.get(ft);
 				c++;
 				this._plantRandomArea.get(ft).push(i);
 				this._plantRandomArea.get(ft).push(j);
-				if(c==1)//获取一个植物
-					this._plantCounter.set(ft,this.getRandomPlantType(ft));
-				else if(c>=this._plantCounter.get(ft)["count"]){
+				if (c == 1)//获取一个植物
+					this._plantCounter.set(ft, this.getRandomPlantType(ft));
+				else if (c >= this._plantCounter.get(ft)["count"]) {
 					c = 0;
 					//植被数据加入到植被列表
-					lst.push(this.getPlant(this._plantCounter.get(ft),this._plantRandomArea.get(ft)));
-					this._plantRandomArea.set(ft,[]);
+					lst.push(this.getPlant(this._plantCounter.get(ft), this._plantRandomArea.get(ft)));
+					this._plantRandomArea.set(ft, []);
 				}
-				this._counter.set(ft,c);
+				this._counter.set(ft, c);
 			}
 		}
 		//根据大区的植被列表创建植被
-		GameData.plantData.initArea(fromX+"_"+fromY,lst);
+		GameData.plantData.initArea(fromX + "_" + fromY, lst);
 		//存储指定大区的植被列表
-		SaveManager.instance.savePlants(fromX+"_"+fromY,JSON.stringify(lst));
+		SaveManager.instance.savePlants(fromX + "_" + fromY, JSON.stringify(lst));
 	}
 
 
 	/**通过模版文件和范围获取一个植物数据对象 */
-	private getPlant(target:Object,pxes:number[]):Object{
-		let obj:Object = new Object();
-		obj["id"]=this._id++;
+	private getPlant(target: Object, pxes: number[]): Object {
+		let obj: Object = new Object();
+		obj["id"] = this._id++;
 		//从固定的方格数量中随机出一个
-		let ridx:number = Math.floor(Math.random()*(pxes.length/2))*2;
-		let gx:number = pxes[ridx];
-		let gy:number = pxes[ridx+1];
+		let ridx: number = Math.floor(Math.random() * (pxes.length / 2)) * 2;
+		let gx: number = pxes[ridx];
+		let gy: number = pxes[ridx + 1];
 		//获取随机到的方格中心点
-		let centerPoint:egret.Point = MapUtil.getPosByGrid(gx,gy);
-		obj["x"] = Math.floor(centerPoint.x -GameConfig.GRID_W/4+Math.random()*GameConfig.GRID_W/2);
-		obj["y"] = Math.floor(centerPoint.y -GameConfig.GRID_H/4+Math.random()*GameConfig.GRID_H/2);
+		let centerPoint: egret.Point = MapUtil.getPosByGrid(gx, gy);
+		obj["x"] = Math.floor(centerPoint.x - GameConfig.GRID_W / 4 + Math.random() * GameConfig.GRID_W / 2);
+		obj["y"] = Math.floor(centerPoint.y - GameConfig.GRID_H / 4 + Math.random() * GameConfig.GRID_H / 2);
 		//小方格的坐标作为key
-		obj["key"] = Math.floor(centerPoint.x/GameConfig.ROOM_GRID_SIZE)+"_"+Math.floor(centerPoint.y/GameConfig.ROOM_GRID_SIZE);
+		obj["key"] = Math.floor(centerPoint.x / GameConfig.ROOM_GRID_SIZE) + "_" + Math.floor(centerPoint.y / GameConfig.ROOM_GRID_SIZE);
 		//这里还缺少配置文件中的一些其他数据,比如生长等
 		return obj;
 	}
 
-	private getRandomPlantType(ft:number):Object{
+	private getRandomPlantType(ft: number): Object {
 		return JSON.parse("{\"count\":8}");
 	}
 

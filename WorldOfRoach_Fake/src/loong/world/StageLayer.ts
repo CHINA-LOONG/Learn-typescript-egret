@@ -96,6 +96,40 @@ class StageLayer extends egret.DisplayObjectContainer {
 	}
 
 	/**
+	 * 删除整个区域的显示(数据不在这里维护,只是删除显示)
+	 * 通过数据中的ID来进行删除
+	 */
+	private delArea(areaKey: string): void {
+		var delLst: Array<IRole> = this._roleGirds.get(areaKey);
+		if (delLst != null) {
+			while (delLst.length > 0) {
+				this.removeRoleFromLink(delLst.pop());
+			}
+		}
+		this._roleGirds.delete(areaKey);
+	}
+
+	/**
+	 * 预加载并显示区域
+	 */
+	private preAddArea(px: number, py: number): void {
+		// var plants: Array<Object> = GameData.plantData.getAreaPlants(px + "_" + py);
+		// if (plants == null)
+		// 	LogTrace.log("植被显示速度超过了植被数据的生成速度");
+		var areaKey: string = px + "_" + py;
+		var plants: Array<Object> = GameData.plantData.getAreaPlants(areaKey);
+		//将plants中的所有对象都构建为对应的植物,并添加到链表对象中
+		var key: any;
+		var obj: Object;
+		var plant: Plant;
+		for (key in plants) {
+			obj = plants[key];
+			plant = PlantMaker.getPlant(obj);
+			this.addRoleToLink(plant, areaKey);
+		}
+	}
+
+	/**
 	 * 将一个对象添加到显示链表中 
 	 * @param 添加的对象
 	 * @param 添加到的区域Id
@@ -152,8 +186,44 @@ class StageLayer extends egret.DisplayObjectContainer {
 
 	public trySynArea(sx: number, sy: number): void {
 		let p: egret.Point = MapUtil.getRoomPosByPosition(sx, sy);
+		if (p.x != this._startX || p.y != this._startY) {
+			this._startX = p.x;
+			this._startY = p.y;
+			this._roomMaker.synCreate(this._startX, this._startY);
+			return;//由于这一步操作运算量很大,所以这一步不再做任何操作
+		}
+		//检查是否要滚动
+		if (Math.abs(sx - this._rollPx) > GameConfig.ROOM_GRID_SIZE || Math.abs(sy - this._rollPy) > GameConfig.ROOM_GRID_SIZE) {
+			this._rollPx = sx;
+			this._rollPy = sy;
+			this.rollOver();
+		}
+		if (this._step == 1)//刷新迷雾
+		{
+			FogForGrid.instance.updateFogs();
+			this._step = -1;
+		}
 	}
-
+	/**
+	 * 检查需要隐藏哪些,显示哪些
+	 * 以gameConfig中的room_size为基础,求的当前屏幕显示范围,上下左右各扩展一格
+	 */
+	private rollOver(): void {
+		var gridX_1: number = Math.floor(this._rollPx / GameConfig.ROOM_GRID_SIZE) - 1;
+		var gridX_2: number = gridX_1 + this._wCount;
+		var gridY_1: number = (Math.floor(this._rollPy / GameConfig.ROOM_GRID_SIZE) - 1);
+		var gridY_2: number = gridY_1 + this._hCount;
+		if (gridX_1 < 0)
+			gridX_1 = 0;
+		if (gridX_2 > this._maxRollW)
+			gridX_2 = this._maxRollW;
+		if (gridY_1 < 0)
+			gridY_1 = 0;
+		if (gridY_2 > this._maxRollH)
+			gridY_2 = this._maxRollH;
+		this.changeDeleteAndCreate(gridX_1, gridX_2, gridY_1, gridY_2);
+		this._step = 1;
+	}
 	/**通过坐标获取当前所在房间的Key 
 	 *@return 返回坐标所在的植被单元格 
 	 */
@@ -209,6 +279,32 @@ class StageLayer extends egret.DisplayObjectContainer {
 		this.sortAllChildren();
 	}
 
+	/**更改删除和添加列表 */
+	private changeDeleteAndCreate(x1: number, x2: number, y1: number, y2: number): void {
+		var px: number = this._gridX_from;
+		var py: number = this._gridY_from;
+		//删除不需要的
+		for (px; px <= this._gridX_to; px++) {
+			for (py = this._gridY_from; py <= this._gridY_to; py++) {
+				if ((px < x1 || px > x2) || (py < y1 || py > y2))//不符合现在的区域条件进行删除
+				{
+					this.delArea(px + "_" + py);
+				}
+			}
+		}
+		px = x1;
+		py = y1;
+		for (px; px <= x2; px++) {
+			for (py = y1; py <= y2; py++) {
+				this.preAddArea(px, py);
+			}
+		}
+		this._gridX_from = x1;
+		this._gridX_to = x2;
+		this._gridY_from = y1;
+		this._gridY_to = y2;
+	}
+
 	/**初始化排序【遮挡关系】 */
 	private sortAllChildren(): void {
 		//重置迭代器
@@ -220,6 +316,24 @@ class StageLayer extends egret.DisplayObjectContainer {
 			if (role != null)
 				this.addChildAt(role, index++);
 		} while (role != null)
+	}
+
+
+	/**删除一个显示对象 */
+	public removeRoleFromLink(lk: any, onlySelf: boolean = false): void {
+		this.removeChild(lk);
+		this._roleLink.remove(lk);
+		var irole: IRole = lk;
+		irole.removed();
+		if (!onlySelf)//如果属于独自删除动作,还需要从维护列表中进行删除
+			return;
+		var ak: string = irole.getAreaKey();
+		var rlst: Array<IRole> = this._roleGirds.get(ak);
+		if (rlst == null)
+			return;
+		var index: number = rlst.indexOf(lk);
+		if (index >= 0)
+			rlst.splice(index, 1);
 	}
 
 	/**碰撞检测与互动检测

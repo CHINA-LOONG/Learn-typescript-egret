@@ -78,7 +78,7 @@ class WorldMakerManager implements IRender {
 		localStorage.setItem(Server_Map.T_MAP_BASE,baseMap);
 		//初始化植被数据
 		GameData.plantData.resetConfig();
-		this.drawTr(true);
+		this.drawTr();
 		//创建迷雾
 		FogForGrid.instance.init(this._sizeW,this._sizeH);
 	}
@@ -87,10 +87,11 @@ class WorldMakerManager implements IRender {
 	 * 
 	 */
 	private drawTr(debug:boolean=false):void{
-		let map:egret.Shape = GameData.mapData.getMapBaseTexture(800,800);
 		let ttr:egret.RenderTexture = new egret.RenderTexture();
+		let map:egret.Shape = GameData.mapData.getMapBaseTexture(800,800);
 		ttr.drawToTexture(map);
 		GameData.mapData.baseMap = ttr;
+		ttr = new egret.RenderTexture();
 		let river:egret.Shape = GameData.mapData.getRiverTexture(800,800);
 		ttr.drawToTexture(river);
 		GameData.mapData.riverMap = ttr;

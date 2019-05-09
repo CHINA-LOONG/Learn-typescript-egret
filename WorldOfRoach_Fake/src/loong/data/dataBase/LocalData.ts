@@ -1,4 +1,13 @@
-
+/**
+ * 本地基础数据,主要针对json文件
+ * 将以数组形式存在的JSON文件进行统一管理
+ * 如下格式user.json=[{},{},{}]
+ * 通过file=user来查询这个表格,可通过扩展来完善仿sql
+ * 另外需要注意：这样做的主要目的是为了将JSON的配置放置到Excel中，并利用工具自动创建.json,.ts文件
+ * @see LocalDataTable
+ * @author loong
+ * @version 1.1
+ */
 class LocalData {
 
 
@@ -32,6 +41,4 @@ class LocalData {
 		}
 		return LocalData._dataMap.get(file);
 	}
-
-
 }
