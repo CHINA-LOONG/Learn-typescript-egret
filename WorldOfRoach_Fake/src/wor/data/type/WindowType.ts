@@ -5,7 +5,8 @@ class WindowType {
     /**操作摇杆 */
     public static ROCKER_LEFT: string = "ROCKER_LEFT";//摇杆
 
-
+    /**小地图 */
+    public static MINI_MAP:string = "MINI_MAP";//小地图
     /**右手操作区 */
     public static CURB_BAR: string = "CURB_BAR";
 

@@ -83,6 +83,22 @@ class FloorLayer extends egret.DisplayObjectContainer {
 		TiledFloorBase.GH_HALF = this._gridH / 2;
 	}
 
+	/**单纯获取地表类型
+	 * @param xp坐标值
+	 * @param yp坐标值
+	 * @return 坐标对应的地表类型
+	 */
+	public getStandType(xp:number,yp:number):number{
+		let key:string = MapUtil.getDiamondKeyX_YFromPos(xp,yp,this._gridW,this._gridH);
+		let ifloor:IFloor=this._floorMap.get(key);
+		this._standOn = ifloor;
+		switch(ifloor.getType()){
+			case LloydMapData.SEA:return StandType.SEA;
+			case LloydMapData.LAKE:return StandType.LAKE;
+			default:return StandType.LAND;
+		}
+	}
+
 	/**预添加地板 */
 	private preAddFloor(px: number, py: number): void {
 		var key: string = px + "_" + py;

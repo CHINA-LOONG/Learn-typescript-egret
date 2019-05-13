@@ -59,12 +59,12 @@ class GameManager {
 		Tiled_Ground.getIns().initWorld(GameConfig.WORD_W,GameConfig.WORD_H);//初始化世界的宽度和高度
 		GameData.timeData.play();
 		WinsManager.getIns().openWindow(RockerBar);//初始化摇杆到界面
-		// WinsManager.getIns().openWindow(TopToolBar);//初始化顶部导航栏
-		// WinsManager.getIns().openWindow(CurbBar);//初始化右侧主控区
-		// WinsManager.getIns().openWindow(BottomBar);//底部导航
-		// WinsManager.getIns().openWindow(RoleWindow);//左上角
-		// WinsManager.getIns().gameStage().addEventListener(egret.Event.DEACTIVATE,this.deactivateHandler,this);
-		// WinsManager.getIns().gameStage().addEventListener(egret.Event.ACTIVATE,this.activateHandler,this);
+		WinsManager.getIns().openWindow(TopToolBar);//初始化顶部导航栏
+		WinsManager.getIns().openWindow(CurbBar);//初始化右侧主控区
+		WinsManager.getIns().openWindow(BottomBar);//底部导航
+		WinsManager.getIns().openWindow(RoleWindow);//左上角
+		WinsManager.getIns().gameStage().addEventListener(egret.Event.DEACTIVATE,this.deactivateHandler,this);
+		WinsManager.getIns().gameStage().addEventListener(egret.Event.ACTIVATE,this.activateHandler,this);
 		WinsManager.getIns().closeWin(GameMainLoaderWindow);//关闭加载
 	}
 

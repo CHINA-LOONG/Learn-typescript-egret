@@ -64,6 +64,35 @@ class LinkArray {
 		}
 	}
 
+	/**互换位置 */
+	public swapNear(lk1: ILink, nearTo: number): void {
+		var index1: number = this._list.indexOf(lk1);
+		var index2: number = index1 + nearTo;
+		var lk2: ILink = this._list[index2];
+		this._list[index2] = lk1;
+		this._list[index1] = lk2;
+		if (nearTo == -1)//和前置交换
+		{
+			lk1.setPre(lk2.getPre());
+			lk2.setNext(lk1.getNext());
+			lk2.setPre(lk1);
+			lk1.setNext(lk2);
+			if(lk1.getPre()!=null)
+				lk1.getPre().setNext(lk1);
+			if(lk2.getNext()!=null)
+				lk2.getNext().setPre(lk2);
+		}
+		else {//和后置交换
+			lk1.setNext(lk2.getNext());
+			lk2.setPre(lk1.getPre());
+			lk2.setNext(lk1);
+			lk1.setPre(lk2);
+			if(lk1.getNext()!=null)
+				lk1.getNext().setPre(lk1);
+			if(lk2.getPre()!=null)
+				lk2.getPre().setNext(lk2);
+		}
+	}
 
 	/**
 	 * 向link中添加一个对象

@@ -5,7 +5,30 @@
  */
 class MapUtil {
 
+	/**通过坐标和格子的宽高获取所在格子x_y */
+	public static getDiamondKeyX_YFromPos(px: number, py: number, gridW: number, gridH: number): string {
+		px += gridW / 2;
+		var xIndex: number = Math.floor(px / gridW);
+		var yIndex: number = Math.floor(py / gridH);
+		var leftCut: number = px - xIndex * gridW;
+		var upCut: number = py - yIndex * gridH;
+		var leftUp: Boolean = leftCut / upCut >= 2;
+		var rightUp: Boolean = (gridW - leftCut) / upCut >= 2;
 
+		//需要判断点所在的地区快
+		if (leftUp) {
+			if (rightUp)
+				return xIndex + "_" + (yIndex * 2);//上
+			else
+				return xIndex + "_" + (yIndex * 2 + 1);//右
+		}
+		else {
+			if (rightUp)
+				return (xIndex - 1) + "_" + (yIndex * 2 + 1);//左
+			else
+				return xIndex + "_" + (yIndex * 2 + 2);//下
+		}
+	}
 
 	/**通过格子的编号获取格子中点坐标 */
 	public static getPosByGrid(px: number, py: number): egret.Point {

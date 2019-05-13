@@ -335,7 +335,20 @@ class StageLayer extends egret.DisplayObjectContainer {
 		if (index >= 0)
 			rlst.splice(index, 1);
 	}
+	/**在链表中上移一个 */
+	public gotoPre(lk: any): void {
+		var lkIndex: number = this.getChildIndex(lk);
+		this.swapChildrenAt(lkIndex - 1, lkIndex);
+		this._roleLink.swapNear(lk, -1);
+	}
 
+	/**在链表中下移一个 */
+	public gotoNext(lk: any): void {
+		var lkIndex: number = this.getChildIndex(lk);
+		this.swapChildrenAt(lkIndex, lkIndex + 1);
+		this._roleLink.swapNear(lk, 1);
+	}
+	
 	/**碰撞检测与互动检测
 	 * @param px场景坐标
 	 * @param py场景坐标
